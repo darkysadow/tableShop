@@ -22,6 +22,28 @@ export const slideAnimation = (direction) => {
   };
 };
 
+export const swiperSlideAnimation = (isActive, direction) => {
+  return {
+    initial: {
+      x: direction === "left" ? -100 : direction === "right" ? 100 : 0,
+      y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+      opacity: 0,
+      transition: { ...transition, delay: 0.5 },
+    },
+    animate: {
+      x: !isActive ? (direction === "left" ? -100 : direction === "right" ? 100 : 0) : 0,
+      y: !isActive ? (direction === "up" ? -100 : direction === "down" ? 100 : 0) : 0,
+      opacity: 1,
+      transition: { ...transition, delay: 0.15 },
+    },
+    exit: {
+      x: isActive ? (direction === "left" ? -100 : direction === "right" ? 100 : 0) : 0,
+      y: isActive ? (direction === "up" ? 100 : direction === "down" ? -100 : 0) : 0,
+      transition: { ...transition, delay: 0 },
+    },
+  };
+}
+
 export const fadeAnimation = {
   initial: {
     opacity: 0,
@@ -36,6 +58,26 @@ export const fadeAnimation = {
     transition: { ...transition, delay: 0 },
   },
 };
+
+export const swiperFadeAnimation = (isActive) => {
+  return {
+    initial: {
+      scale: 0.5,
+      opacity: 0,
+      transition: { ...transition, delay: 0.5 },
+    },
+    animate: {
+      scale: isActive? 1: 0.5,
+      opacity: isActive ? 1 : 0,
+      transition: { ...transition, delay: 0.2 },
+    },
+    exit: {
+      scale: isActive?0.5:1,
+      opacity: isActive ? 0 : 1,
+      transition: { ...transition, delay: 0 },
+    },
+  }
+}
 
 export const headTextAnimation = {
   initial: { x: 100, opacity: 0 },
