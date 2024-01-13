@@ -5,7 +5,11 @@ import React, { useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
 
-
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 
 //Images
 import atlant from '@/public/slider/1.jpg'
@@ -43,7 +47,7 @@ const Slider = () => {
 
                         </div>
                         <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center w-[45%]'>
-                            <Image src={loft} alt="Table Loft" layout='responsive' width={500} height={500} />
+                            <Image priority={false} src={loft} alt="Table Loft" layout='responsive' width={500} height={500} />
                         </motion.div>
 
                     </div>)}
@@ -59,7 +63,7 @@ const Slider = () => {
 
                         </div>
                         <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center w-[45%]'>
-                            <Image src={atlant} alt="Table Loft" layout='responsive' width={200} height={200} />
+                            <Image priority={false} src={atlant} alt="Table Loft" layout='responsive' width={200} height={200} />
                         </motion.div>
 
                     </div>)}
@@ -75,7 +79,7 @@ const Slider = () => {
 
                         </div>
                         <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center w-[45%]'>
-                            <Image src={twoTable} alt="Tables from catalog" layout='responsive' width={500} height={500} />
+                            <Image priority={false} src={twoTable} alt="Tables from catalog" layout='responsive' width={500} height={500} />
                         </motion.div>
 
                     </div>)}
