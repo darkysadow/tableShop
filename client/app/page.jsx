@@ -2,6 +2,7 @@ import Slider from '@/components/Slider/Slider';
 import SliderLoading from '@/components/Slider/SliderLoading';
 import { Suspense } from 'react';
 import UnderSliderSection from '@/components/landing/UnderSliderSection';
+import Sales from '@/components/landing/Sales';
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
         <Slider />
       </Suspense>
       <UnderSliderSection />
-      
+      <Sales />
     </main>
   )
 }

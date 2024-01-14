@@ -1,4 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -27,6 +29,87 @@
     rgb(var(--background-start-rgb));
 } */
 
+.sale-triangle::after, .sale-triangle::before {
+  position: absolute;
+  content: '';
+  bottom: -0.4rem;
+  width: 0px;
+  height: 0px;
+  border-bottom: 0.5rem solid transparent;
+}
+
+.sale-triangle::before {
+  right: 0;
+  border-left: 0.91rem solid #bd8448;
+  border-right: 0.90rem solid transparent;
+}
+
+.sale-triangle::after {
+  left: 0;
+  border-left: 0.90rem solid transparent;
+  border-right: 0.91rem solid #bd8448;
+}
+
+.sale-card:hover > .sale-card-bottom > .sale-card-bottom-effect > .sale-card-addtocart {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.sale-card:hover > .sale-card-bottom > .sale-card-bottom-effect > .sale-card-price {
+  transform: translateY(-50%);
+  opacity: 0;
+}
+
+.sale-card:hover > .sales-main-image {
+  opacity: 0;
+  display: none;
+}
+
+.sale-card:hover > .sales-second-image {
+  opacity: 1;
+  display: block;
+}
+
+.sale-card:hover > .sales-secondary-buttons {
+  opacity: 1;
+  transform: rotate(0deg);
+}
+
+
+.sale-card-price {
+  position: absolute;
+  opacity: 1;
+  transition: opacity 0.3s linear, transform 0.3s linear;
+}
+
+.sale-card-addtocart {
+  position: absolute;
+  opacity: 0;
+  left: 8px;
+  transform: translateX(200%);
+  transition: transform 0.3s linear, opacity 0.3s linear, color 0.2s linear;
+  cursor: pointer;
+}
+
+.sale-card-addtocart:hover {
+  color: #bd8448;
+}
+
+.sale-card-addtocart::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  opacity: 0;
+  bottom: 0;
+  height: 1px;
+  background: #bd8448;
+  transition: opacity 0.2s linear;
+}
+
+.sale-card-addtocart:hover::before {
+  opacity: 1;
+}
+
 .swiper-skeleton-button {
   position: absolute;
   top: 50%;
@@ -39,6 +122,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.sales-main-image {
+  display: block;
+  transition: opacity 0.3s linear;
+}
+
+.sales-second-image{
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s linear;
+
+}
+
+.sales-secondary-buttons {
+  right: 3%;
+  transform: translateX(10%) rotate(50deg);
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s linear, transform 0.3s linear, color 0.3s linear;
+}
+
+.sales-secondary-buttons:hover {
+  color: #bd8448;
 }
 
 .swiper-skeleton-bullets {
