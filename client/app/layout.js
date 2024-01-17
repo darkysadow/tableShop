@@ -1,4 +1,5 @@
 import './globals.css'
+import './iconfont.css'
 import Header from '@/components/Header/Header'
 
 export const metadata = {

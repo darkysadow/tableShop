@@ -60,7 +60,23 @@
   opacity: 0;
 }
 
-.sale-card:hover > .sales-main-image {
+.sale-card {
+  position: relative;
+}
+
+.sales-second-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: opacity 0.2s linear;
+  opacity: 0;
+}
+
+.sale-card:hover > .sales-second-image {
+  opacity: 1;
+}
+
+/* .sale-card:hover > .sales-main-image {
   opacity: 0;
   display: none;
 }
@@ -68,7 +84,7 @@
 .sale-card:hover > .sales-second-image {
   opacity: 1;
   display: block;
-}
+} */
 
 .sale-card:hover > .sales-secondary-buttons {
   opacity: 1;
@@ -124,7 +140,7 @@
   justify-content: center;
 }
 
-.sales-main-image {
+/* .sales-main-image {
   display: block;
   transition: opacity 0.3s linear;
 }
@@ -134,18 +150,20 @@
   opacity: 0;
   transition: opacity 0.3s linear;
 
-}
+} */
 
 .sales-secondary-buttons {
   right: 3%;
   transform: translateX(10%) rotate(50deg);
   opacity: 0;
+  z-index: 3;
   cursor: pointer;
-  transition: opacity 0.2s linear, transform 0.3s linear, color 0.3s linear;
+  transition: opacity 0.2s linear, transform 0.3s linear, color 0.3s linear, border-color 0.3s linear;
 }
 
 .sales-secondary-buttons:hover {
   color: #bd8448;
+  border-color: #bd8448;
 }
 
 .swiper-skeleton-bullets {
