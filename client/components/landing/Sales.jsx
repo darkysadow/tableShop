@@ -1,7 +1,10 @@
 import React from 'react'
 
-import atlantMain from '@/public/tablesPhotos/Atlant/oak_boras/main.jpg'
-import atlantSecond from "@/public/tablesPhotos/Atlant/oak_boras/second.jpg"
+import atlantMain from '@/public/wtp/Atlant/oak_boras/main.jpg'
+import atlantSecond from "@/public/wtp/Atlant/oak_boras/second.jpg"
+
+/* import atlantMain from '@/public/tablesPhotos/Atlant/oak_boras/main.jpg'
+import atlantSecond from "@/public/tablesPhotos/Atlant/oak_boras/second.jpg" */
 
 import Image from 'next/image'
 

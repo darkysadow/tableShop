@@ -12,9 +12,9 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 //Images
-import atlant from '@/public/slider/1.jpg'
-import loft from '@/public/slider/2.jpg'
-import twoTable from '@/public/slider/3.jpg'
+import atlant from '@/public/wtp/Trapezia/oak_palena/second.jpg'
+import loft from '@/public/wtp/Atlant/oak_boras/main.jpg'
+import twoTable from '@/public/wtp/Lima/venge_luiziana/main.jpg'
 import { swiperFadeAnimation, swiperSlideAnimation } from '@/config/motion'
 import Image from 'next/image'
 import Link from 'next/link'

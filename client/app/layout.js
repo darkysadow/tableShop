@@ -9,9 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className='relative w-full h-full'>
         <Header />
-        {children}
+        <main  className='pt-[86px]'>
+          {children}
+        </main>
       </body>
     </html>
   )
