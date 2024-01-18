@@ -4,6 +4,7 @@ import { Suspense } from 'react';
 import UnderSliderSection from '@/components/landing/UnderSliderSection';
 import Sales from '@/components/landing/Sales';
 import BrandSlider from '@/components/Slider/BrandSlider';
+import DiscountInfo from '@/components/landing/DiscountInfo';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <UnderSliderSection />
       <Sales />
       <BrandSlider />
+      <DiscountInfo />
     </main>
   )
 }
