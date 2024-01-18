@@ -220,3 +220,13 @@
 .swiper-pagination-bullet-active {
   background: #000000d5 !important;
 }
+
+.footer-nav > div > ul > li:hover > a,
+.social-links > a {
+  transition: color 0.3s linear;
+}
+
+.footer-nav > div > ul > li:hover > a,
+.social-links > a:hover {
+  color: #bd8448;
+}

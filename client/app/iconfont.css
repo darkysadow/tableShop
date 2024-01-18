@@ -25,6 +25,36 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+._icon-facebook:before {
+  content: "\e907";
+}
+._icon-instagram:before {
+  content: "\e908";
+}
+._icon-pinterest:before {
+  content: "\e909";
+}
+._icon-tiktok:before {
+  content: "\e90a";
+}
+._icon-twitter:before {
+  content: "\e90b";
+}
+._icon-bag:before {
+  content: "\e902";
+}
+._icon-dot:before {
+  content: "\e903";
+}
+._icon-incoming-call:before {
+  content: "\e904";
+}
+._icon-incoming-mail:before {
+  content: "\e905";
+}
+._icon-totop:before {
+  content: "\e906";
+}
 ._icon-heart:before {
   content: "\e900";
 }
