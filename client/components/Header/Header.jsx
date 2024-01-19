@@ -3,7 +3,7 @@
 import { slideAnimation } from '@/config/motion';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const Header = () => {
   const [mobileBurgerOpened, setMobileBurgerOpened] = useState(false);
@@ -16,10 +16,17 @@ const Header = () => {
       setMobileBurgerOpened(true)
     }
   }
+
+  useEffect(() => {
+    mobileBurgerOpened
+      ? (document.body.style.overflow = 'hidden')
+      : (document.body.style.overflow = 'scroll');
+  }, [mobileBurgerOpened]);
+  //2.5rem+46px
   return (
     <AnimatePresence>
-      <header className='fixed z-50 w-full bg-transparent backdrop-blur-xl px-5  py-5'>
-        <div className='container mx-auto font-poppins flex flex-row justify-between items-center'>
+      <header className={'fixed z-50 w-full backdrop-blur-xl ' + `${mobileBurgerOpened ? 'bg-white' : 'bg-transparent'}`}>
+        <div className='container px-5  py-5 mx-auto font-poppins flex flex-row justify-between items-center'>
           <motion.h1 className="text-3xl leading-[46px] font-medium  text-[#1a1919]" {...slideAnimation('left')}><Link href={'/'}>TableShop™</Link></motion.h1>
 
           <motion.nav className='flex flex-row gap-5 max-md:hidden items-center' {...slideAnimation('down')}>
@@ -66,13 +73,13 @@ const Header = () => {
             className='hidden w-4 h-4 relative max-md:block burger-menu space-y-1 group transition-all'
             onClick={toggleMobileBurgerOpened}
           >
-            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "rotate-45 bottom-1/3 -translate-y-1/3 bg-[#bd8448]" : "top-[1px] bg-pink-600"}`}></span>
-            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "-rotate-45 top-1/3 -translate-y-1/3 bg-[#bd8448]" : 'top-1/4 -translate-y-1/2 bg-pink-600'}`}></span>
-            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-pink-600 " + `${mobileBurgerOpened ? "opacity-0" : 'opacity-1 bottom-[1px]'}`}></span>
+            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "rotate-45 bottom-1/3 -translate-y-1/3 bg-[#bd8448]" : "top-[1px] bg-black"}`}></span>
+            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "-rotate-45 top-1/3 -translate-y-1/3 bg-[#bd8448]" : 'top-1/4 -translate-y-1/2 bg-black'}`}></span>
+            <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black " + `${mobileBurgerOpened ? "opacity-0" : 'opacity-1 bottom-[1px]'}`}></span>
           </div>
         </div>
-        <div className={'flex items-center justify-center mobile-burger-layout fixed top-20 transition-all w-full h-[100vh] z-[49] pb-20 bg-white ' + `${mobileBurgerOpened ? 'right-0' : '-right-full'}`} >
-          <nav className='mx-auto flex flex-col gap-y-2 text-right'>
+        <div className={'flex items-center justify-center mobile-burger-layout fixed top-[calc(2.5rem+46px)] transition-all w-full h-[calc(100vh-(2.5rem+46px))] z-[49] pb-[calc(2.5rem+46px)] bg-white ' + `${mobileBurgerOpened ? 'right-0' : '-right-full'}`} >
+          <nav className='mx-auto flex flex-col gap-y-2 text-center text-2xl'>
             <Link href='/catalog'>Catalog</Link>
             <Link href='/contacts'>Contacts</Link>
             <Link href='/configurator'>Create Your</Link>
@@ -83,14 +90,14 @@ const Header = () => {
               <Link href={'/login'}>Sign in</Link>
               <Link href={'/register'}>Register</Link>
               <Link 
-                className='flex flex-row items-center justify-end gap-x-1'
+                className='flex flex-row items-center justify-center gap-x-1'
                 href={'/search'}
               >
                 <span className='_icon-loup text-xl'></span>
                 Search
               </Link>
               <Link 
-                className='flex flex-row items-center justify-end gap-x-1'
+                className='flex flex-row items-center justify-center gap-x-1'
                 href={'/cart'}
               >
                 <span className='_icon-bag text-xl'></span>

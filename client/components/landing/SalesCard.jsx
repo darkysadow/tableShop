@@ -9,7 +9,7 @@ const SalesCard = ({item}) => {
     const discountPercentage = Math.floor((Number(item.oldPrice) - Number(item.salePrice)) / (item.oldPrice) * 100)
 
     return (
-        <div className='w-[32%] pb-8 mb-6'>
+        <div className='w-[32%] max-md:w-full pb-8 mb-6'>
             <div className='relative w-full sale-card'>
                 {/* Sale percent */}
                 <div className='absolute w-full'>

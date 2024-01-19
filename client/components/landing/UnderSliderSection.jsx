@@ -11,9 +11,9 @@ import { fadeAnimation, slideAnimation } from '@/config/motion'
 
 const UnderSliderSection = () => {
   return (
-    <section className='container mx-auto my-10 flex flex-row justify-between'>
+    <section className='container mx-auto my-10 flex flex-row justify-between max-md:flex-col max-md:px-10'>
           <motion.div 
-            className='w-[50%] flex flex-row items-center gap-3'
+            className='w-[50%] max-md:w-full flex flex-row items-center gap-3 max-md:gap-0 max-md:justify-between'
             {...slideAnimation('left')}
           >
             <div className='w-[50%] h-full py-4 flex flex-col justify-center gap-4'>
@@ -28,7 +28,7 @@ const UnderSliderSection = () => {
             </motion.div>
           </motion.div>
           <motion.div 
-            className='w-[50%] flex flex-row items-center gap-3 justify-end'
+            className='w-[50%] max-md:w-full flex flex-row-reverse items-center gap-3 max-md:gap-0 max-md:justify-between'
             {...slideAnimation('right')}
           >
             <div className='w-[50%] h-full py-4 flex flex-col justify-center gap-4'>

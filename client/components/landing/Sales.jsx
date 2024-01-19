@@ -41,7 +41,7 @@ const Sales = () => {
                     <h2 className='text-center font-medium text-3xl'>Sale Off</h2>
                     <h3 className='text-center font-normal text-md text-[#323232]'>You might like discounted items</h3>
                 </div>
-                <div className='flex flex-row justify-start gap-x-[2%] flex-wrap py-10'>
+                <div className='flex flex-row justify-start gap-x-[2%] flex-wrap py-10 max-md:flex-col'>
                     {saleGoods && saleGoods.map((item, index) => (
                         <SalesCard key={index} item={item} />
                     ))}
