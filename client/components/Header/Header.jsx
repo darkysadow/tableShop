@@ -7,15 +7,14 @@ import React, { useState } from 'react'
 
 const Header = () => {
   const [mobileBurgerOpened, setMobileBurgerOpened] = useState(false);
-  const toggleMobileBurgerOpened = () => {
+  const [dropdownBurgerOpened, setDropdownBurgerOpened] = useState(false)
 
+  const toggleMobileBurgerOpened = () => {
     if (mobileBurgerOpened) {
       setMobileBurgerOpened(false)
     } else {
       setMobileBurgerOpened(true)
-
     }
-    console.log(mobileBurgerOpened);
   }
   return (
     <AnimatePresence>
@@ -41,20 +40,32 @@ const Header = () => {
             </div>
             {/* Burger */}
             <div
-              className="space-y-1 group transition-all"
+              onMouseLeave={() => setDropdownBurgerOpened(false)}
+              onMouseEnter={() => setDropdownBurgerOpened(true)} 
+              className="relative group transition-all py-3 px-3 "
             >
-              <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
-              <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
-              <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
+              <div className='space-y-1'
+                 
+              >
+                <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
+                <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
+                <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
+              
+              </div>
+              <div 
+                onMouseLeave={() => setDropdownBurgerOpened(false)}
+                className={"absolute py-4 flex flex-col pl-4 pr-20 gap-y-3 bg-white top-full shadow-2xl rounded right-0 transition-all " + `${dropdownBurgerOpened ? "opacity-1 visible" : "opacity-0 invisible"}`}
+                >
+                  <Link href={'/wishlist'} className='transition hover:text-[#bd8448]'>Wishlist(0)</Link>
+                  <Link href={'/login'} className='transition hover:text-[#bd8448]'>Sign in</Link>
+                  <Link href={'/register'} className='transition hover:text-[#bd8448]'>Register</Link>
+                </div>
             </div>
           </motion.div>
           <div
             className='hidden w-4 h-4 relative max-md:block burger-menu space-y-1 group transition-all'
             onClick={toggleMobileBurgerOpened}
           >
-            {/* <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
-              <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span>
-              <span className="block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-black"></span> */}
             <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "rotate-45 bottom-1/3 -translate-y-1/3 bg-[#bd8448]" : "top-[1px] bg-pink-600"}`}></span>
             <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "-rotate-45 top-1/3 -translate-y-1/3 bg-[#bd8448]" : 'top-1/4 -translate-y-1/2 bg-pink-600'}`}></span>
             <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448] bg-pink-600 " + `${mobileBurgerOpened ? "opacity-0" : 'opacity-1 bottom-[1px]'}`}></span>
@@ -86,7 +97,6 @@ const Header = () => {
                 Cart
               </Link>
             </div>
-
           </nav>
         </div>
       </header>
