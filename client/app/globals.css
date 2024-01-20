@@ -38,6 +38,15 @@
   border-bottom: 0.5rem solid transparent;
 }
 
+@media (max-width: 768px) {
+  .sale-triangle::before {
+    right: -0.04rem !important;
+  }
+  .sale-triangle::after {
+    left: -0.03rem !important;
+  }
+}
+
 .sale-triangle::before {
   right: 0;
   border-left: 0.91rem solid #bd8448;
@@ -70,6 +79,27 @@
   left: 0;
   transition: opacity 0.2s linear;
   opacity: 0;
+}
+
+@media (max-width: 768px) {
+  .sale-card-addtocart {
+    opacity: 1 !important;
+    left: 65% !important;
+    transform: translateX(0%) !important;
+    display: inline-block !important;
+  }
+  .sales-secondary-buttons {
+    transform: translateX(0%) rotate(0deg) !important;
+    opacity: 1 !important;
+    transition: opacity 0.2s linear, transform 0.3s linear, color 0.3s linear, border-color 0.3s linear;
+  }
+  .sale-card:hover > .sale-card-bottom > .sale-card-bottom-effect > .sale-card-price  {
+    opacity: 1;
+    transform: translateY(0%) !important;
+  }
+  .sale-card:hover > .sale-card-bottom > .sale-card-bottom-effect > .sale-card-addtocart {
+    transform: translateX(0%) !important;
+  }
 }
 
 .sale-card:hover > .sales-second-image {

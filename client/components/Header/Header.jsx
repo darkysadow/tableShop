@@ -70,7 +70,7 @@ const Header = () => {
             </div>
           </motion.div>
           <div
-            className='hidden w-4 h-4 relative max-md:block burger-menu space-y-1 group transition-all'
+            className='hidden w-4 h-4 relative max-md:block burger-menu space-y-1 group transition-all header-burger'
             onClick={toggleMobileBurgerOpened}
           >
             <span className={"absolute block h-0.5 w-4 transition group-hover:bg-[#bd8448]  " + `${mobileBurgerOpened ? "rotate-45 bottom-1/3 -translate-y-1/3 bg-[#bd8448]" : "top-[1px] bg-black"}`}></span>
