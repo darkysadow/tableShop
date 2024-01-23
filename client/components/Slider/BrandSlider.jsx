@@ -30,22 +30,22 @@ const BrandSlider = () => {
         >
             <SwiperSlide>
                 <div className='flex justify-center items-center mb-5 h-full relative'>
-                    <Image src={kronospan} fill objectFit='contain' objectPosition='center' />
+                    <Image src={kronospan} fill sizes={'100%'} style={{objectFit: 'contain',objectPosition: 'center' }} alt='kronospan' />
                 </div>
             </SwiperSlide>
             <SwiperSlide>
                 <div className='flex justify-center items-center h-full relative'>
-                    <Image src={pfleiderer} fill objectFit='contain' objectPosition='center' />
+                    <Image src={pfleiderer} fill sizes={'100%'} style={{objectFit: 'contain',objectPosition: 'center' }} alt='pfleider' />
                 </div>
             </SwiperSlide>
             <SwiperSlide>
                 <div className='flex justify-center items-center h-full relative'>
-                    <Image src={swisskrono} fill objectFit='contain' objectPosition='center' />
+                    <Image src={swisskrono} fill sizes={'100%'} style={{objectFit: 'contain',objectPosition: 'center' }} alt='swisskrono' />
                 </div>
             </SwiperSlide>
             <SwiperSlide>
                 <div className='flex justify-center items-center h-full relative mb-10'>
-                    <Image src={swisspan} fill objectFit='contain' objectPosition='center' />
+                    <Image src={swisspan} fill sizes={'100%'} style={{objectFit: 'contain',objectPosition: 'center' }} alt='swisspan' />
                 </div>
             </SwiperSlide>
         </Swiper>

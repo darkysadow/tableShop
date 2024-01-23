@@ -48,7 +48,7 @@ const Slider = () => {
                         </div>
                         <div className='max-md:w-full md:w-[45%] flex justify-center items-center'>
                             <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center  md:w-full max-md:w-[80%]'>
-                                <Image priority={false} src={loft} alt="Table Loft" layout='responsive' width={500} height={500} />
+                                <Image priority={false} src={loft} alt="Table Loft" /* layout='responsive' */ width={500} height={500} />
                             </motion.div>
                         </div>
                         
@@ -70,7 +70,7 @@ const Slider = () => {
                         </div>
                         <div className='max-md:w-full md:w-[45%] flex justify-center items-center'>
                         <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center md:w-full max-md:w-[80%]'>
-                            <Image priority={false} src={atlant} alt="Table Loft" layout='responsive' width={200} height={200} />
+                            <Image priority={false} src={atlant} alt="Table Loft" /* layout='responsive' */ width={500} height={500} />
                         </motion.div>
                         </div>
                         
@@ -91,7 +91,7 @@ const Slider = () => {
                         </div>
                         <div className='max-md:w-full md:w-[45%] flex justify-center items-center'>
                         <motion.div {...swiperFadeAnimation(isActive)} className='flex items-center md:w-full max-md:w-[full]'>
-                            <Image priority={false} src={twoTable} alt="Tables from catalog" layout='responsive' width={500} height={500} />
+                            <Image priority={false} src={twoTable} alt="Tables from catalog" /* layout='responsive' */ width={500} height={500} />
                         </motion.div>
                         </div>
                         

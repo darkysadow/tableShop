@@ -24,7 +24,7 @@ const UnderSliderSection = () => {
               className='w-36 h-36 relative rounded-full'
               {...fadeAnimation}
             >
-              <Image priority={false} src={materialsImage} alt='Materials' fill={true} style={{ objectFit: "cover" }} className='rounded-full' />
+              <Image priority={false} src={materialsImage} alt='Materials' fill={true} sizes='100%' style={{ objectFit: "cover" }} className='rounded-full' />
             </motion.div>
           </motion.div>
           <motion.div 
@@ -39,7 +39,7 @@ const UnderSliderSection = () => {
               className='w-36 h-36 relative rounded-full'
               {...fadeAnimation}
             >
-              <Image priority={false} src={legsImage} alt='Legs' fill={true} style={{ objectFit: "cover" }} className='rounded-full' />
+              <Image priority={false} src={legsImage} alt='Legs' fill={true} sizes='100%' style={{ objectFit: "cover" }} className='rounded-full' />
             </motion.div>
           </motion.div>
       </section>

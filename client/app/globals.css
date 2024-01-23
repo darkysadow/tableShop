@@ -272,13 +272,3 @@ body::-webkit-scrollbar-thumb {
   background-color: #232323;
 }
 
-.quick-view-form-inputBox {
-  input::-webkit-outer-spin-button,
-  input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type=number]{
-    -moz-appearance: textfield;
-  }
-}
