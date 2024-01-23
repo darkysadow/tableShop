@@ -1,16 +1,10 @@
 "use client"
 
-import { Button, Dialog, DialogActions, DialogContent, Input, Rating } from '@mui/material'
+import { Dialog, DialogContent, Rating } from '@mui/material'
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
-
-import image1 from "@/public/wtp/Atlant/oak_boras/main.jpg"
-import image2 from "@/public/wtp/Atlant/oak_boras/second.jpg"
-
-
-
 
 const SalesCard = ({ item }) => {
     const imagePath = `/wtp/${item.tableType}/${item.material}/`
@@ -23,7 +17,6 @@ const SalesCard = ({ item }) => {
     const discountPercentage = Math.floor((Number(item.oldPrice) - Number(item.salePrice)) / (item.oldPrice) * 100)
     const [dialogOpened, setDialogOpened] = useState(false);
     const [goodCountToAdd, setGoodCountToAdd] = useState(1);
-
 
     const increaseCount = () => {
         setGoodCountToAdd(goodCountToAdd + 1)
@@ -44,19 +37,15 @@ const SalesCard = ({ item }) => {
         }
     }
 
-
     const closeDialog = () => {
         setDialogOpened(false)
         setGoodCountToAdd(1)
     }
 
-
     return (
         <>
-
             <div
                 className='w-[32%] max-md:w-full pb-8 mb-6'
-
             >
                 <div className='relative w-full sale-card'>
                     {/* Sale percent */}
@@ -85,7 +74,6 @@ const SalesCard = ({ item }) => {
                             <div className='absolute sale-card-addtocart font-rubik'>
                                 Add to Cart +
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -100,8 +88,8 @@ const SalesCard = ({ item }) => {
                     </div>
 
                     <DialogContent>
-                        <div className='w-full h-full text-[#6e6d6d] flex flex-row gap-x-2'>
-                            <div className="quick-view-slider w-1/2">
+                        <div className='w-full h-full text-[#6e6d6d] flex md:flex-row gap-x-2 max-md:flex-col'>
+                            <div className="quick-view-slider md:w-1/2 max-md:w-full">
                                 <Swiper
                                     modules={[Navigation, Pagination, A11y]}
                                     spaceBetween={50}
@@ -148,13 +136,13 @@ const SalesCard = ({ item }) => {
                                 <div className="quick-view-description line-clamp-3 w-full">
                                     {item.description}
                                 </div>
-                                <div className='quick-view-form flex flex-row justify-between my-5'>
-                                    <div className='quick-view-form-inputBox flex flex-row w-1/3 justify-between items-center border-2 text-black'>
+                                <div className='quick-view-form flex md:flex-row justify-between my-5 max-md:flex-col max-md:gap-y-2'>
+                                    <div className='quick-view-form-inputBox flex flex-row md:w-1/3 justify-between items-center border-2 text-black max-md:w-full'>
                                         <button onClick={reduceCount} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
                                         <input type='number' value={goodCountToAdd} onChange={(e) => onInputValueChange(e.target.value)} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
                                         <button onClick={increaseCount} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>
                                     </div>
-                                    <button className='w-[calc(70%-40px)] bg-black text-white md:transition md:hover:bg-[#bd8448]'>Add To Cart</button>
+                                    <button className='md:w-[calc(70%-40px)] bg-black text-white md:transition md:hover:bg-[#bd8448] max-md:w-full max-md:py-3'>Add To Cart</button>
                                 </div>
                                 <div className='flex flex-row gap-1 mb-1'>
                                     Table type: <p className='text-black'>{item.tableType}</p>
