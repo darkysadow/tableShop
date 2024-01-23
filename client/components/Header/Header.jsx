@@ -19,8 +19,8 @@ const Header = () => {
 
   useEffect(() => {
     mobileBurgerOpened
-      ? (document.body.style.overflow = 'hidden')
-      : (document.body.style.overflow = 'scroll');
+      ? (document.body.style.overflowY = 'hidden')
+      : (document.body.style.overflowY = 'scroll');
   }, [mobileBurgerOpened]);
   //2.5rem+46px
   return (
