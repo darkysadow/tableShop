@@ -44,8 +44,9 @@ export default async function Home() {
                     </div>
                 </div>
             </section>
-            <section className="container mx-auto flex flex-row flex-wrap">
+            <section className="container mx-auto flex flex-row flex-wrap my-28">
                 {data.products && data.products.edges.map((item, index) => (<CatalogCard key={index} item={item.node} />))}
+                
             </section>
         </main>
     )
