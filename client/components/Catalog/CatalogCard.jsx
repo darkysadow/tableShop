@@ -8,11 +8,19 @@ const CatalogCard = ({item}) => {
 
     
     const [selectedVariant, setSelectedVariant] = useState('Oak Boras')
+    const [mainImgLoaded, setMainImgLoaded] = useState(false)
+    const [secondImgLoaded, setSecondImgLoaded] = useState(false)
     const altForImage = item.title.split(' ')[0].toLowerCase()+"_"+ selectedVariant.toLowerCase().split(" ").join('-');
     const previewMainImage = item.images.edges.find(image => image.node.altText === (altForImage + "_main"))?.node.url;
     const previewSecondImage = item.images.edges.find(image => image.node.altText === (altForImage + "_second"))?.node.url;
     const variantsNames = item.variants.edges.map((variant) => variant.node.title)
     /* const materialImagePath = `/materialPreview/${item.material}/Color.jpg` */
+
+    const changeMaterial = (material) => {
+        setMainImgLoaded(false)
+        setSecondImgLoaded(false)
+        setSelectedVariant(material)
+    }
 
 
     return (
@@ -32,7 +40,7 @@ const CatalogCard = ({item}) => {
                                 key={index} 
                                 className={'relative w-8 h-8 flex justify-center items-center rounded-full border-2 ' + `${selectedVariant === variant ? ' border-[#bd8448]' : " border-slate-300"}`}
 
-                                onClick={() => setSelectedVariant(variant)}
+                                onClick={() => changeMaterial(variant)}
                             >
                                 
                                 <Image 
@@ -46,11 +54,16 @@ const CatalogCard = ({item}) => {
                             </div>
                         ))}
                     </div>
+                    {(!mainImgLoaded || !setMainImgLoaded) && (<div className='absolute w-[calc(100%-6rem)] left-[2rem] h-5/6 z-30 flex justify-center items-center backdrop-blur-sm tracking-widest sales-main-preloader'>
+                        <div className='ml-[1rem] lds-circle'>
+                            <div></div>
+                        </div>
+                    </div>)}
                     <div className='w-full sales-main-image'>
-                        {previewMainImage && <Image priority={false} src={previewMainImage} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'top' }} alt={" main image"} />}
+                        {previewMainImage && <Image priority={false} blurDataURL src={previewMainImage} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'top' }} alt={" main image"} onLoad={() => setMainImgLoaded(true)} />}
                     </div>
                     <div className='w-full sales-second-image'>
-                        {previewSecondImage && <Image priority={false} src={previewSecondImage} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'top' }} alt={" second image"} />}
+                        {previewSecondImage && <Image priority={false} blurDataURL src={previewSecondImage} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'top' }} alt={" second image"} onLoad={() => setSecondImgLoaded(true)} />}
                     </div>
                     <div className='overflow-x-hidden sale-card-bottom'>
                         <h4 className='px-2 my-2 text-[#323232] transition hover:text-[#bd8448] cursor-pointer inline-block'>
