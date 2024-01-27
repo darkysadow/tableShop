@@ -31,15 +31,15 @@ const CatalogCard = ({item}) => {
                 className='w-[32%] max-md:w-full pb-8 mb-6'
             >
                 <div className='relative w-full sale-card'>
-                    <div className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[20%] max-xl:top-[10%] max-md:top-[20%] bg-white flex justify-center items-center before:opacity-0 transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Add\00a0to\00a0Wishlist"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'>
+                    <div className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[20%] max-xl:top-[10%] max-md:top-[20%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Add\00a0to\00a0Wishlist"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'>
                         <span className='_icon-heart leading-4 text-lg'></span>
                     </div>
                     <div
-                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[40%] max-xl:top-[40%] max-md:top-[40%] bg-white flex justify-center items-center before:opacity-0 transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Quick\00a0View"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'
+                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[40%] max-xl:top-[40%] max-md:top-[40%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Quick\00a0View"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'
                         
                     ><span className='_icon-loup leading-4 text-lg'></span></div>
                     <div
-                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[60%] max-xl:top-[70%] max-md:top-[60%] bg-white flex justify-center items-center before:opacity-0 transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Visit\00a0Page"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'
+                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[60%] max-xl:top-[70%] max-md:top-[60%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Visit\00a0Page"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'
                         
                     ><span className='_icon-totop leading-4 text-lg'></span>
                     
@@ -51,7 +51,7 @@ const CatalogCard = ({item}) => {
                                 className={`variant relative w-8 h-8 flex transition-all justify-center items-center rounded-full border-2 ` + `${selectedVariant === variant ? ' border-[#bd8448]' : " border-slate-300"}`}
                                 onClick={() => changeMaterial(variant)}
                             >
-                                <div className='material-label opacity-0 transition-all absolute left-[150%] inline-block text-nowrap px-4 bg-[rgba(0,0,0,0.85)] text-white text-sm rounded-md rounded-ss-none'>
+                                <div className='material-label opacity-0 invisible transition-all absolute left-[150%] inline-block text-nowrap px-4 bg-[rgba(0,0,0,0.85)] text-white text-sm rounded-md rounded-ss-none'>
                                     {variant}
                                 </div>
                                 <Image 
