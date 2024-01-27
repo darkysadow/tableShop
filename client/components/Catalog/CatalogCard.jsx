@@ -32,11 +32,19 @@ const CatalogCard = ({item}) => {
                 className='w-[32%] max-md:w-full pb-8 mb-6'
             >
                 <div className='relative w-full sale-card'>
-                    <div className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[30%] bg-white flex justify-center items-center'><span className='_icon-heart leading-4 text-lg'></span></div>
+                    <div className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[20%] bg-white flex justify-center items-center before:opacity-0 transition-opacity before:transition-opacity hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Add\00a0to\00a0Wishlist"] before:right-[105%] before:rounded-md  before:rounded-ee-none'>
+                        <span className='_icon-heart leading-4 text-lg'></span>
+                    </div>
                     <div
-                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[55%] bg-white flex justify-center items-center'
+                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[40%] bg-white flex justify-center items-center before:opacity-0 transition-opacity before:transition-opacity hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Quick\00a0View"] before:right-[105%] before:rounded-md  before:rounded-ee-none'
                         
                     ><span className='_icon-loup leading-4 text-lg'></span></div>
+                    <div
+                        className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[60%] bg-white flex justify-center items-center before:opacity-0 transition-opacity before:transition-opacity hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Visit\00a0Page"] before:right-[105%] before:rounded-md  before:rounded-ee-none'
+                        
+                    ><span className='_icon-totop leading-4 text-lg'></span>
+                    
+                    </div>
                     <div className='absolute left-2 w-8 h-5/6 flex flex-col justify-center gap-y-3 z-10'>
                         {variantsNames && variantsNames.map((variant, index) => (
                             <div 
