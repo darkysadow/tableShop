@@ -304,3 +304,8 @@ body::-webkit-scrollbar-thumb {
     transform: rotateY(3600deg);
   }
 }
+
+.variant:hover > .material-label {
+  opacity: 1;
+  left: 110%;
+}
