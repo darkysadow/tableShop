@@ -17,9 +17,12 @@ const CatalogCard = ({item}) => {
     /* const materialImagePath = `/materialPreview/${item.material}/Color.jpg` */
 
     const changeMaterial = (material) => {
-        setMainImgLoaded(false)
-        setSecondImgLoaded(false)
-        setSelectedVariant(material)
+        if (material !== selectedVariant) {
+            setMainImgLoaded(false)
+            setSecondImgLoaded(false)
+            setSelectedVariant(material)
+        }
+        
     }
 
 
@@ -34,7 +37,7 @@ const CatalogCard = ({item}) => {
                         className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[55%] bg-white flex justify-center items-center'
                         
                     ><span className='_icon-loup leading-4 text-lg'></span></div>
-                    <div className='absolute w-8 h-5/6 flex flex-col justify-center gap-y-3 z-10'>
+                    <div className='absolute left-2 w-8 h-5/6 flex flex-col justify-center gap-y-3 z-10'>
                         {variantsNames && variantsNames.map((variant, index) => (
                             <div 
                                 key={index} 
@@ -54,7 +57,7 @@ const CatalogCard = ({item}) => {
                             </div>
                         ))}
                     </div>
-                    {(!mainImgLoaded || !setMainImgLoaded) && (<div className='absolute w-[calc(100%-6rem)] left-[2rem] h-5/6 z-30 flex justify-center items-center backdrop-blur-sm tracking-widest sales-main-preloader'>
+                    {(!mainImgLoaded || !secondImgLoaded) && (<div className='absolute w-[calc(100%-6.65rem)] left-[2.5rem] h-5/6 z-30 flex justify-center items-center backdrop-blur-sm tracking-widest sales-main-preloader'>
                         <div className='ml-[1rem] lds-circle'>
                             <div></div>
                         </div>
