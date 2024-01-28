@@ -1,5 +1,7 @@
+import { StoreProvider } from "@/app/redux/provider";
 import ItemRating from "@/components/Catalog/CatalogItem/ItemRating";
 import MaterialPicker from "@/components/Catalog/CatalogItem/MaterialPicker";
+import ProductImageSlider from "@/components/Catalog/CatalogItem/ProductImageSlider";
 import { shopifyData } from "@/lib/shopify";
 import Link from "next/link";
 
@@ -46,14 +48,12 @@ export default async function CatalogItem({params}) {
                 <p>{data.product.title}</p>
             </section>
             <section className="flex flex-row max-md:flex-col h-full">
-                <div className="w-3/5">
-                    <div>
-                        IMAGE
-                    </div>
-                </div>
+                <StoreProvider>
+                  <ProductImageSlider />
+                </StoreProvider>
                 <div className="w-2/5 flex flex-col pb-96">
                     <h1 className="font-medium text-3xl">{product.title}</h1>
-                    <ItemRating />
+                      <ItemRating />
                     <div className="quick-view-price flex flex-row gap-x-2 items-center my-5 text-2xl">
                         <span className='font-rubik text-black'>${product.priceRange.maxVariantPrice.amount}</span>
                     </div>
@@ -62,7 +62,10 @@ export default async function CatalogItem({params}) {
                       className="py-4 text-[#4f4f4f] text-lg leading-8 px-2"
                       dangerouslySetInnerHTML={{__html: product.descriptionHtml}}></div>
                     <hr />
-                    <MaterialPicker materials={product.variants.edges} />
+                    <StoreProvider>
+                      <MaterialPicker materials={product.variants.edges} />
+                    </StoreProvider>
+                    
                 </div>
             </section>
         </main>
