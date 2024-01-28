@@ -3,7 +3,7 @@ import { shopifyData } from "@/lib/shopify";
 import Image from "next/image";
 import Link from "next/link";
 
-export default async function Home() {
+export default async function Catalog() {
     const query = `
     {
         products (first: 15) {

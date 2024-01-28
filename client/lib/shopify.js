@@ -9,6 +9,7 @@ export const shopifyData = async (query) => {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({ query }),
+        cache: 'no-store' 
     };
 
     try {

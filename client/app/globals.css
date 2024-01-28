@@ -307,6 +307,5 @@ body::-webkit-scrollbar-thumb {
 
 .variant:hover > .material-label {
   opacity: 1;
-  left: 110%;
   visibility: visible;
 }
