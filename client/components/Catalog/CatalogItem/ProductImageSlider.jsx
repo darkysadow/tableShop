@@ -11,8 +11,6 @@ const ProductImageSlider = ({ images }) => {
     const [selectedImage, setSelectedImage] = useState(undefined)
     const [isImagesLoaded, setIsImagesLoaded] = useState(undefined)
 
-    const [imgLoaded, setImgLoaded] = useState(false)
-
     function compareAltText(a, b) {
         // Common order for preview images
         const order = {
