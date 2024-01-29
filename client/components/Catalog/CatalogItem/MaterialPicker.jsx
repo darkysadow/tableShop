@@ -1,15 +1,15 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import React, { useEffect } from 'react'
 import { changeMaterial } from '@/app/redux/features/cardMaterial/cardMaterialSlice'
+import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 
 const MaterialPicker = ({ materials }) => {
-    const material = useSelector((state) => state.cardMaterial.value)
-    const dispatch = useDispatch()
+    const material = useAppSelector((state) => state.cardMaterial.value)
+    const dispatch = useAppDispatch()
     useEffect(() => {
-        if(material === undefined) {
+        if(material === undefined || (material && material.node.product.productType !== materials[0].node.product.productType)) {
             dispatch(changeMaterial(materials[0]))
         }
         

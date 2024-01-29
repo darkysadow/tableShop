@@ -22,6 +22,9 @@ export default async function CatalogItem({params}) {
           edges {
             node {
               title
+              product {
+                productType
+              }
             }
           }
         }
@@ -49,7 +52,7 @@ export default async function CatalogItem({params}) {
             </section>
             <section className="flex flex-row max-md:flex-col h-full">
                 <StoreProvider>
-                  <ProductImageSlider />
+                  <ProductImageSlider images={product.images.edges} />
                 </StoreProvider>
                 <div className="w-2/5 flex flex-col pb-96">
                     <h1 className="font-medium text-3xl">{product.title}</h1>
