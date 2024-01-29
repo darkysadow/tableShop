@@ -4,6 +4,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import React, { useState } from 'react'
+import ImagePreloader from '../Preloaders/ImagePreloader'
 
 const CatalogCard = ({item}) => {
 
@@ -64,9 +65,7 @@ const CatalogCard = ({item}) => {
                         ))}
                     </div>
                     {(!mainImgLoaded || !secondImgLoaded) && (<div className='absolute w-[calc(100%-6.65rem)] left-[2.5rem] h-5/6 z-30 flex justify-center items-center backdrop-blur-sm tracking-widest sales-main-preloader'>
-                        <div className='ml-[1rem] lds-circle'>
-                            <div></div>
-                        </div>
+                        <ImagePreloader />
                     </div>)}
                     <div className='w-full sales-main-image'>
                         {previewMainImage && <Image priority={false} blurDataURL src={previewMainImage} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'top' }} alt={" main image"} onLoad={() => setMainImgLoaded(true)} />}
