@@ -54,7 +54,7 @@ const ProductImageSlider = ({ images }) => {
     if (material) {
 
         return (
-            <div className="w-3/5 flex flex-row">
+            <div className="w-3/5 flex flex-row max-md:w-full">
                 <div className='w-1/5 flex flex-col gap-y-5'>
                     {productImages && productImages.map((productImage, index) => (
                         <div
