@@ -4,18 +4,19 @@ import Image from 'next/image'
 import React, { useEffect } from 'react'
 import { changeMaterial } from '@/app/redux/features/cardMaterial/cardMaterialSlice'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
+import MaterialPickerSkeleton from './MaterialPickerSkeleton'
 
 const MaterialPicker = ({ materials }) => {
     const material = useAppSelector((state) => state.cardMaterial.value)
     const dispatch = useAppDispatch()
     useEffect(() => {
-        if(material === undefined || (material && material.node.product.productType !== materials[0].node.product.productType)) {
+        if (material === undefined || (material && material.node.product.productType !== materials[0].node.product.productType)) {
             dispatch(changeMaterial(materials[0]))
         }
-        
+
     }, [materials])
-    
-    if(material) {
+
+    if (material) {
         return (
             <div className="flex flex-col items-start my-5">
                 <p>Material: <span className="font-medium">{material.node.title}</span></p>
@@ -40,10 +41,10 @@ const MaterialPicker = ({ materials }) => {
         )
     } else {
         return (
-            <div>Loading...</div>
+            <MaterialPickerSkeleton />
         )
     }
-    
+
 }
 
 export default MaterialPicker
