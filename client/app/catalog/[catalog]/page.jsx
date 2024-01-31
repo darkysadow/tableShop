@@ -54,6 +54,7 @@ export default async function CatalogItem({ params }) {
         <StoreProvider>
           <ProductImageSlider images={product.images.edges} />
         </StoreProvider>
+        
         <div className="w-2/5 flex flex-col pb-96 max-md:w-full max-md:mt-9">
           <div className="w-full flex flex-col max-md:flex-col-reverse">
             <div>

@@ -4,6 +4,7 @@ import ImagePreloader from '@/components/Preloaders/ImagePreloader'
 import Image from 'next/image'
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import ProductImageSkeleton from './ProductImageSkeleton'
 
 const ProductImageSlider = ({ images }) => {
     const material = useSelector((state) => state.cardMaterial.value)
@@ -104,7 +105,7 @@ const ProductImageSlider = ({ images }) => {
         )
     } else {
         return (
-            <div>Loading...</div>
+            <ProductImageSkeleton />
         )
     }
 
