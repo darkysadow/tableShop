@@ -1,9 +1,11 @@
 "use client"
 
+import { StoreProvider } from '@/app/redux/provider';
 import { slideAnimation } from '@/config/motion';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import CartButton from './CartButton';
 
 const Header = () => {
   const [mobileBurgerOpened, setMobileBurgerOpened] = useState(false);
@@ -25,7 +27,7 @@ const Header = () => {
   //2.5rem+46px
   return (
     <AnimatePresence>
-      <header className={'fixed z-50 w-full backdrop-blur-xl ' + `${mobileBurgerOpened ? 'bg-white' : 'bg-transparent'}`}>
+      <header className={'fixed z-40 w-full backdrop-blur-xl ' + `${mobileBurgerOpened ? 'bg-white' : 'bg-transparent'}`}>
         <div className='container px-5  py-5 mx-auto font-poppins flex flex-row justify-between items-center'>
           <motion.h1 className="text-3xl leading-[46px] font-medium  text-[#1a1919]" {...slideAnimation('left')}><Link href={'/'}>TableShop™</Link></motion.h1>
 
@@ -41,10 +43,13 @@ const Header = () => {
               <span className='_icon-loup text-xl'></span>
               Search
             </div>
-            <div className='flex flex-row items-center gap-1 cursor-pointer transition hover:text-[#bd8448]'>
+            {/* <div className='flex flex-row items-center gap-1 cursor-pointer transition hover:text-[#bd8448]'>
               <span className='_icon-bag text-xl'></span>
               Cart
-            </div>
+            </div> */}
+            <StoreProvider>
+              <CartButton />
+            </StoreProvider>
             {/* Burger */}
             <div
               onMouseLeave={() => setDropdownBurgerOpened(false)}

@@ -3,6 +3,8 @@ import './globals.css'
 import './iconfont.css'
 import Header from '@/components/Header/Header'
 import Head from 'next/head'
+import CartSidebar from '@/components/Cart/CartSidebar'
+import { StoreProvider } from './redux/provider'
 
 export const metadata = {
   title: 'TableShop',
@@ -17,9 +19,12 @@ export default function RootLayout({ children }) {
       </Head>
       <body className='relative w-full h-full font-poppins'>
         <Header />
-        <main  className='pt-[86px]'>
+        <main className='pt-[86px]'>
           {children}
         </main>
+        <StoreProvider>
+          <CartSidebar />
+        </StoreProvider>
         <Footer />
       </body>
     </html>
