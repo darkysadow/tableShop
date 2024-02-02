@@ -3,6 +3,7 @@ import Additionals from "@/components/Catalog/CatalogItem/Additionals";
 import ItemRating from "@/components/Catalog/CatalogItem/ItemRating";
 import MaterialPicker from "@/components/Catalog/CatalogItem/MaterialPicker";
 import ProductImageSlider from "@/components/Catalog/CatalogItem/ProductImageSlider";
+import DiscountInfo from "@/components/landing/DiscountInfo";
 import { shopifyData } from "@/lib/shopify";
 import Link from "next/link";
 
@@ -90,6 +91,7 @@ export default async function CatalogItem({ params }) {
       <section className="flex flex-col my-10">
         <Additionals metafields={product.metafields} />
       </section>
+      <DiscountInfo />
     </main>
   )
 }
