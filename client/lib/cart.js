@@ -23,3 +23,14 @@ export const unsetCartId = () => {
 export const getCartIdFromLocalCookie = () => {
     return Cookies.get('cartId')
 }
+
+
+export const createCartQuery = `
+mutation {
+    cartCreate (input: {}) {
+      cart {
+        id
+      }
+    }
+  }
+`
