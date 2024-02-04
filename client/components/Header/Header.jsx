@@ -108,7 +108,7 @@ const Header = () => {
               </Link>
               <div className='flex flex-row justify-center'>
                 <StoreProvider>
-                  <CartButton onClick={handleLinkClick} />
+                  <CartButton onClickProps={handleLinkClick} />
                 </StoreProvider>
               </div>
             </div>
