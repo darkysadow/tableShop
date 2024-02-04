@@ -6,6 +6,7 @@ import React from 'react'
 
 const CartButton = ({onClickProps}) => {
     const isCartOpened = useAppSelector((state) => state.cart.isCartOpened)
+    const cartAmount = Number(useAppSelector((state) => state.cart.totalQuantity))
     const dispatch = useAppDispatch()
 
     const handleClick = () => {
@@ -28,7 +29,7 @@ const CartButton = ({onClickProps}) => {
             onClick={() => {changeCartState(); handleClick()}}
             className='flex flex-row items-center gap-1 cursor-pointer transition hover:text-[#bd8448]'>
             <span className='_icon-bag text-xl'></span>
-            Cart
+            Cart {cartAmount !== 0 ? `(${cartAmount})` : ''}
         </div>
     )
 }

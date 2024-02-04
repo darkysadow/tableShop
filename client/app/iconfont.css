@@ -25,6 +25,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+._icon-shipping:before {
+  content: "\e90c";
+}
+
 ._icon-facebook:before {
   content: "\e907";
 }
