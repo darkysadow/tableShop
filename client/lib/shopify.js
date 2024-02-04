@@ -26,18 +26,40 @@ export const shopifyData = async (query) => {
 export const getShopifyCart = async (cartId) => {
     const query = `
     {
-        cart (id: "${cartId}")  {
-            lines (first: 100) {
-                edges {
-                    node {
-                        id
-                    }
-                }
+        cart(id: "${cartId}") {
+          totalQuantity
+          cost {
+            totalAmount {
+              amount
+              currencyCode
             }
+          }
+          lines(first: 100) {
+            edges {
+                node {
+                  id
+                  merchandise {
+                    ... on ProductVariant {
+                      id
+                      title
+                      price {
+                        amount
+                      }
+                      image {
+                        url
+                      }
+                      product {
+                        title
+                      }
+                    }
+                  }
+                }
+              }
+          }
         }
-    }
+      }
     `
-    
+
     const URL = `https://${process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN}/api/2024-01/graphql.json`
     const options = {
         endpoint: URL,
@@ -47,7 +69,7 @@ export const getShopifyCart = async (cartId) => {
             Accept: "application/json",
             "Content-Type": "application/json",
         },
-        body: JSON.stringify({query}),
+        body: JSON.stringify({ query }),
         cache: 'no-store'
     };
 

@@ -4,39 +4,50 @@ import { closeCart } from '@/app/redux/features/cart/cartSlice'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import React, { useEffect, useState } from 'react'
 import CartItem from './CartItem'
-import { getCartIdFromLocalCookie, setCartId } from '@/lib/cart'
 import getCartFromShopify from '@/lib/actions/getCartFromShopify'
 import createCartOnShopify from '@/lib/actions/createCartOnShopify'
 
 const CartSidebar = () => {
     const isCartOpened = useAppSelector((state) => state.cart.isCartOpened)
     const dispatch = useAppDispatch()
-    const [localCartId, setLocalCartId] = useState(undefined)
-    const [cartLines, setCartLines] = useState(undefined)
+    const [cart, setCart] = useState({id: null, lines: []})
+
+    useEffect(() => {
+        async function getCart() {
+            let localCartData = JSON.parse(
+                window.localStorage.getItem('tableShop:shopify:cart')
+            )
+
+            if (localCartData) {
+                const cartInfo = await getCartFromShopify(localCartData.id)
+                setCart({
+                    id: localCartData.cartId,
+                    totalQuantity: cartInfo.data.cart.totalQuantity,
+                    lines: cartInfo.data.cart.lines.edges,
+                    totalAmount: cartInfo.data.cart.cost.totalAmount
+                })
+                return
+            }
+
+            localCartData = await createCartOnShopify()
+            setCart({
+                id: localCartData.id,
+                totalQuantity: '0.0',
+                lines: [],
+                totalAmount: '0.0'
+            })
+
+            window.localStorage.setItem('tableShop:shopify:cart', JSON.stringify(localCartData))
+        }
+        getCart()
+    }, [])
+
 
     useEffect(() => {
         isCartOpened
             ? (document.body.style.overflowY = 'hidden')
             : (document.body.style.overflowY = 'scroll');
     }, [isCartOpened]);
-
-    useEffect(() => {
-        setLocalCartId(getCartIdFromLocalCookie())
-        const fetchData = async () => {
-            if (!localCartId) {
-                const res = await createCartOnShopify()
-                const settingResult = setCartId(res)
-                if (settingResult) {
-                    setLocalCartId(getCartIdFromLocalCookie())
-                }
-            } else {
-                const cartResponse = await getCartFromShopify(localCartId)
-                setCartLines(cartResponse.data.cart.lines)
-            }
-        }
-        fetchData()
-    }, [localCartId])
-
 
     return (
         <div className={'fixed left-0 w-full h-[100vh] z-50 ' + `${isCartOpened ? ' bg-[#00000042] visible top-0' : ' bg-transparent invisible -top-full'}`}>
@@ -56,31 +67,19 @@ const CartSidebar = () => {
                     <p className='text-sm text-slate-500'>Free Shipping for all orders over $500.00</p>
                 </div>
                 <div className='overflow-y-auto'>
-                    <CartItem
-                        title={'Plastic Dining Armchair'}
-                        material={"Oak Boras"}
-                        price={120}
-                        amount={1}
-                        previewImageUrl={'https://cdn.shopify.com/s/files/1/0564/6693/1811/files/main.jpg?v=1706054037'}
-                    />
-                    <CartItem
-                        title={'Plastic Dining Armchair'}
-                        material={"Oak Boras"}
-                        price={120}
-                        amount={1}
-                        previewImageUrl={'https://cdn.shopify.com/s/files/1/0564/6693/1811/files/main.jpg?v=1706054037'}
-                    />
-                    <CartItem
-                        title={'Plastic Dining Armchair'}
-                        material={"Oak Boras"}
-                        price={120}
-                        amount={1}
-                        previewImageUrl={'https://cdn.shopify.com/s/files/1/0564/6693/1811/files/main.jpg?v=1706054037'}
-                    />
+                    {
+                        cart?.lines && cart.lines.map((cartItem, index) => (<CartItem
+                            key={index}
+                            title={cartItem.node.merchandise.product.title}
+                            material={cartItem.node.merchandise.title}
+                            price={cartItem.node.merchandise.price.amount}
+                            amount={1}
+                            previewImageUrl={cartItem.node.merchandise.image.url} 
+                        />))
+                    }
                 </div>
             </div>
         </div>
-
     )
 }
 
