@@ -2,7 +2,6 @@
 
 import Image from 'next/image'
 import React from 'react'
-import ImagePreloader from '../Preloaders/ImagePreloader'
 
 const CartItem = ({
     title, previewImageUrl,
@@ -27,18 +26,18 @@ const CartItem = ({
                     <h4 className='text-lg'>{title}</h4>
                     <p className='text-sm text-slate-400'>Material: {material}</p>
                     <p className='text-lg text-black font-medium'>${price}</p>
-                    <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full relative'>
+                    {amount !== 0 ? <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full relative'>
                         <button disabled={isLoading?.status} onClick={() => changeAmount(variantId ,amount - 1)} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
                         <input type='number' disabled={isLoading?.status} value={amount} onChange={(e) => e.target.value >= 1 && changeAmount(variantId, e.target.value)} min={1} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
                         <button disabled={isLoading?.status} onClick={() => changeAmount(variantId, amount + 1)} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>
                         {isLoading?.id === variantId && <div className='absolute w-full h-full z-40 flex justify-center items-center bg-[#0000000f]'></div>}
-                    </div>
+                    </div> : <p>The product is not available!</p>}
                 </div>
             </div>
-            <span
+            <div
                         className='mr-3 cursor-pointer text-xl transition-colors md:hover:text-[#bd8448]'
                         onClick={() => deleteFromCart(variantId)} 
-                    >✖</span>
+                    >✖</div>
 
         </div>
     )

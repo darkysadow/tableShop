@@ -64,18 +64,18 @@ const CartSidebar = () => {
     return (
         <div className={'fixed left-0 w-full h-[100vh] z-50 ' + `${isCartOpened ? ' bg-[#00000042] visible top-0' : ' bg-transparent invisible -top-full'}`}>
             <div
-                className=' max-sm:w-0 max-md:w-1/3 md:w-1/2 max-lg:w-2/4 lg:w-8/12 h-full'
+                className=' max-sm:w-0 max-md:w-1/3 md:w-1/2 max-lg:w-2/4 lg:w-8/12 h-[100vh]'
                 onClick={() => { dispatch(closeCart()) }}
             ></div>
-            <div className={'fixed transition-all h-full max-sm:w-full max-md:w-2/3 md:1/2 max-lg:w-2/4 lg:w-4/12  pt-6 bg-white flex flex-col z-50 shadow-xl top-0 ' + `${isCartOpened ? ' right-0 visible' : ' -right-full invisible'}`}>
-                <div className='flex flex-row justify-between text-3xl px-5 '>
+            <div className={'fixed transition-all h-[100vh] max-sm:w-full max-md:w-2/3 md:1/2 max-lg:w-2/4 lg:w-4/12  pt-6 bg-white flex flex-col z-50 shadow-xl top-0 ' + `${isCartOpened ? ' right-0 visible' : ' -right-full invisible'}`}>
+                <div className='flex flex-row justify-between text-3xl px-5 h-[5vh]'>
                     <p>Your Cart</p>
                     <span
                         className='mr-3 cursor-pointer'
                         onClick={() => dispatch(closeCart())}
                     >✖</span>
                 </div>
-                <div className='mt-10 w-full bg-slate-50 px-5 border-t-[1px] border-b-[1px] border-slate-200 py-5'>
+                <div className='mt-[1.55rem] w-full bg-slate-50 px-5 border-t-[1px] border-b-[1px] border-slate-200 py-5 h-[10vh]'>
                     <div className='w-full h-2 flex flex-row items-start justify-start bg-slate-300 rounded-lg'>
                         {cart?.totalAmount && <div 
                             className={`h-full relative bg-blue-400 rounded-lg transition-all`}
@@ -98,8 +98,8 @@ const CartSidebar = () => {
                 </div>
                 {
                     cart?.lines && cart?.lines?.length !== 0
-                ? <div className='w-full h-full flex flex-col justify-between'>
-                <div className='overflow-y-auto scrolable-block '>
+                ? <>
+                <div className='overflow-y-auto scrolable-block h-[50vh] '>
                     {
                         cart?.lines && cart.lines.map((cartItem, index) => (<CartItem
                             key={index}
@@ -117,7 +117,7 @@ const CartSidebar = () => {
                     
                 </div>
                 
-                <div className='w-full flex flex-col gap-y-2 px-4 py-5'>
+                <div className='w-full flex flex-col gap-y-2 px-4 py-5 h-[25vh]'>
                 <hr />
                     <div className='flex flex-row justify-between items-center'>
                         <p className='text-black font-medium text-lg'>Subtotal</p>
@@ -128,7 +128,7 @@ const CartSidebar = () => {
                         <button className='uppercase px-10 py-3 font-semibold text-sm transition-colors hover:bg-black bg-[#bd8448] text-white'>check out</button>
                     </div>
                 </div>
-                </div> :
+                </> :
                 <div className='w-full text-3xl text-[#000000a1] py-10 text-center'>Your cart is empty</div>
                 }
             </div>

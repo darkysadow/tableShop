@@ -2,10 +2,10 @@
 
 import { shopifyData } from "../shopify"
 
-export default async function addToCart(cartId, variantId) {
+export default async function addToCart(cartId, variantId, quantity = 1) {
     const addToCartQuerry = `
     mutation AddToCart {
-        cartLinesAdd(cartId: "${cartId}", lines: [{quantity: 1, merchandiseId: "${variantId}"}]) {
+        cartLinesAdd(cartId: "${cartId}", lines: [{quantity: ${quantity}, merchandiseId: "${variantId}"}]) {
           cart {
             cost {
                 totalAmount {

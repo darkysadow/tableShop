@@ -1,4 +1,6 @@
+import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { StoreProvider } from "@/app/redux/provider";
+import AddToCart from "@/components/Catalog/CatalogItem/AddToCart";
 import Additionals from "@/components/Catalog/CatalogItem/Additionals";
 import ItemRating from "@/components/Catalog/CatalogItem/ItemRating";
 import MaterialPicker from "@/components/Catalog/CatalogItem/MaterialPicker";
@@ -9,7 +11,6 @@ import Link from "next/link";
 
 export default async function CatalogItem({ params }) {
   const productId = params.catalog
-
   const query = `
     {
         product (id: "gid://shopify/Product/${productId}") {
@@ -32,6 +33,7 @@ export default async function CatalogItem({ params }) {
         variants (first:5) {
           edges {
             node {
+              id
               title
               product {
                 productType
@@ -52,6 +54,7 @@ export default async function CatalogItem({ params }) {
     `
 
   const { data } = await shopifyData(query)
+  
   const product = data.product
 
   return (
@@ -81,6 +84,7 @@ export default async function CatalogItem({ params }) {
             </div>
             <StoreProvider>
               <MaterialPicker materials={product.variants.edges} />
+              <AddToCart />
             </StoreProvider>
           </div>
           <div className="my-5">
