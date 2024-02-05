@@ -7,7 +7,8 @@ const initialState = {
     cartId: null,
     totalQuantity: '0.0',
     lines: [],
-    totalAmount: 0
+    totalAmount: 0,
+    isFetch: []
 }
 
 export const cartSlice = createSlice({
@@ -31,12 +32,30 @@ export const cartSlice = createSlice({
         },
         setCartAmount: (state, action) => {
             state.totalAmount = action.payload
+        },
+        addLineToCart: (state, action) => {
+            return {
+                ...state,
+                lines: [ action.payload, ...lines]
+            }
+        },
+        setIsFetch: (state, action) => {
+            return {
+                ...state,
+                isFetch: [...state.isFetch, {id: action.payload, status: true}]
+            }
+        },
+        unsetIsFetch: (state, action) => {
+            return {
+                ...state,
+                isFetch: [state.isFetch.filter(item => item.id !== action.payload)]
+            }
         }
 
     }
 })
 
-export const {openCart, closeCart, setCartId, 
-                setCartQuantity, setCartLines, setCartAmount} = cartSlice.actions
+export const {openCart, closeCart, setCartId, setIsFetch, unsetIsFetch,
+                setCartQuantity, setCartLines, setCartAmount, addLineToCart} = cartSlice.actions
 
 export default cartSlice.reducer

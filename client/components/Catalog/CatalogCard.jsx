@@ -5,8 +5,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader'
-import { useAppSelector } from '@/app/redux/hooks'
+import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import addToCart from '@/lib/actions/addToCart'
+import { openCart, setCartLines, setCartQuantity, setIsFetch, unsetIsFetch } from '@/app/redux/features/cart/cartSlice'
 
 const CatalogCard = ({item}) => {
 
@@ -20,31 +21,42 @@ const CatalogCard = ({item}) => {
     const variantsNames = item.variants.edges.map((variant) => variant.node.title)
 
     const cartId = useAppSelector((state) => state.cart.cartId)
+    const isCartDataFetching = useAppSelector((state) => state.cart.isFetch)
+    const dispatch = useAppDispatch()
 
     useEffect(() => {
         setSelectedVariant(item.variants.edges[0].node)
     }, [])
 
     const changeMaterial = (material) => {
-        if (material !== selectedVariant.title) {
-            setMainImgLoaded(false)
-            setSecondImgLoaded(false)
-            const newMaterial = item.variants.edges.find(edge => edge.node.title === material).node
-            setSelectedVariant(newMaterial)
+        if (!isCartDataFetching.find(cartItem => cartItem.id === item.id)?.status) {
+            if (material !== selectedVariant.title) {
+                setMainImgLoaded(false)
+                setSecondImgLoaded(false)
+                const newMaterial = item.variants.edges.find(edge => edge.node.title === material).node
+                setSelectedVariant(newMaterial)
+            }
         }
-        
     }
 
     const handleAddToCart = async () => {
-        const res = await addToCart(cartId, selectedVariant.id)
-        console.log(res);
+        if (!isCartDataFetching.find(cartItem => cartItem.id === item.id)?.status) {
+            dispatch(setIsFetch(item.id))
+            const res = await addToCart(cartId, selectedVariant.id)
+            if (res.data) {
+                dispatch(setCartQuantity(res.data.cartLinesAdd.cart.totalQuantity))
+                dispatch(setCartLines(res.data.cartLinesAdd.cart.lines.edges))
+                dispatch(unsetIsFetch(item.id))
+                dispatch(openCart())
+            }
+        }
     }
 
 
     return (
         <>
             <div
-                className='w-[32%] max-md:w-full pb-8 mb-6'
+                className='w-[32%] max-md:w-full pb-8 mb-6 relative'
             >
                 <div className='relative w-full sale-card'>
                     <div className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[20%] max-xl:top-[10%] max-md:top-[20%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Add\00a0to\00a0Wishlist"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'>
@@ -101,6 +113,10 @@ const CatalogCard = ({item}) => {
                         </div>
                     </div>
                 </div>
+                {isCartDataFetching.find(cartItem => cartItem.id === item.id)?.status === true && 
+                    <div className='absolute w-full h-full top-0 left-0  z-40 flex justify-center items-center'>
+                        <ImagePreloader />    
+                    </div>}
             </div>
         </>
     )

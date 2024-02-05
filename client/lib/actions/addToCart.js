@@ -7,23 +7,31 @@ export default async function addToCart(cartId, variantId) {
     mutation AddToCart {
         cartLinesAdd(cartId: "${cartId}", lines: [{quantity: 1, merchandiseId: "${variantId}"}]) {
           cart {
-            lines(first: 100) {
-              edges {
-                node {
-                  id
-                  quantity
-                  merchandise {
-                    ... on ProductVariant {
-                      title
-                      product {
+            totalQuantity
+            lines (first: 100) {
+                edges {
+                  node {
+                    id
+                    quantity
+                    merchandise {
+                      ... on ProductVariant {
+                        id
                         title
                         
+                        price {
+                          amount
+                        }
+                        image {
+                          url
+                        }
+                        product {
+                          title
+                        }
                       }
                     }
                   }
                 }
               }
-            }
           }
         }
       }
@@ -31,5 +39,5 @@ export default async function addToCart(cartId, variantId) {
 
 
     const res = await shopifyData(addToCartQuerry)
-    console.log(res);
+    return res
 }
