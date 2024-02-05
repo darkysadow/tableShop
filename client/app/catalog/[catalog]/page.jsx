@@ -56,12 +56,12 @@ export default async function CatalogItem({ params }) {
 
   return (
     <main className="container mx-auto flex flex-col">
-      <section className="text-sm flex flex-row my-10 [&>*]:relative [&>*]:before:absolute [&>*]:text-[#7f7f7f] [&>*]:before:content-['/'] [&>*]:before:right-0 [&>*]:px-7 max-sm:[&>*]:px-3 [&>p]:before:content-[''] [&>p]:text-black ">
+      <section className="text-sm flex flex-row my-10 px-4 [&>*]:relative [&>*]:before:absolute [&>*]:text-[#7f7f7f] [&>*]:before:content-['/'] [&>*]:before:right-0 [&>*]:px-7 max-sm:[&>*]:px-3 [&>p]:before:content-[''] [&>p]:text-black ">
         <Link href={'/'} >Home</Link>
         <Link href={'/catalog'}>Catalog</Link>
         <p>{data.product.title}</p>
       </section>
-      <section className="flex flex-row max-md:flex-col h-full">
+      <section className="flex flex-row px-4 max-md:flex-col h-full">
         <StoreProvider>
           <ProductImageSlider images={product.images.edges} />
         </StoreProvider>

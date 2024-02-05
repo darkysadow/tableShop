@@ -5,14 +5,14 @@ import React, { useState } from 'react'
 import Review from './Review'
 
 const Additionals = ({ metafields }) => {
-    const [openedTab, setOpenedTab] = useState("Additional")
+    const [openedTab, setOpenedTab] = useState("Shopping & Return")
     return (
         <>
             <div className="w-full px-2">
                 <ul className="w-full overflow-x-auto pb-5 px-4 text-nowrap flex flex-row justify-center gap-x-20 my-5 font-medium max-md:justify-start text-[#7f7f7f]">
                     <li
-                        onClick={(e) => setOpenedTab(e.target.outerText)}
-                        className={"transition-colors cursor-pointer hover:text-black hover:transition-colors " + `${openedTab === 'Additional' && " text-black"}`}>Additional</li>
+                        onClick={(e) => metafields[0]?.key && setOpenedTab(e.target.outerText)}
+                        className={"transition-colors cursor-pointer hover:text-black hover:transition-colors " + `${!metafields[0]?.key ? ' hidden' : openedTab === 'Additional' && " text-black"}`}>Additional</li>
                     <li
                         onClick={(e) => setOpenedTab(e.target.outerText)}
                         className={"transition-colors cursor-pointer hover:text-black hover:transition-colors " + `${openedTab === 'Shopping & Return' && " text-black"}`}>Shopping & Return</li>

@@ -78,7 +78,7 @@ const CartSidebar = () => {
                 <div className='mt-10 w-full bg-slate-50 px-5 border-t-[1px] border-b-[1px] border-slate-200 py-5'>
                     <div className='w-full h-2 flex flex-row items-start justify-start bg-slate-300 rounded-lg'>
                         {cart?.totalAmount && <div 
-                            className={`h-full relative bg-blue-400 rounded-lg`}
+                            className={`h-full relative bg-blue-400 rounded-lg transition-all`}
                             style={{
                                 width: `${(cart.totalAmount.amount/500)*100 <= 100 ? (cart.totalAmount.amount/500)*100 : 100}%`
                             }}

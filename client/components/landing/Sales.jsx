@@ -1,12 +1,5 @@
 import React from 'react'
 
-import atlantMain from '@/public/wtp/Atlant/oak_boras/main.jpg'
-import atlantSecond from "@/public/wtp/Atlant/oak_boras/second.jpg"
-import lindaMain from '@/public/wtp/Linda/oak_palena/main.jpg'
-import lindaSecond from "@/public/wtp/Linda/oak_palena/second.jpg"
-import trapeziaMain from '@/public/wtp/Trapezia/oak_boras/main.jpg'
-import trapeziaSecond from "@/public/wtp/Trapezia/oak_boras/second.jpg"
-
 import SalesCard from './SalesCard'
 
 const saleGoods = [
@@ -44,7 +37,7 @@ const saleGoods = [
 
 const Sales = () => {
     return (
-        <div className='w-full my-5'>
+        <div className='w-full my-5 px-4'>
             <div className='container mx-auto flex flex-col my-10'>
                 <div className='flex flex-col'>
                     <h2 className='text-center font-medium text-3xl'>Sale Off</h2>
