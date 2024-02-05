@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import addToCart from '@/lib/actions/addToCart'
-import { openCart, setCartLines, setCartQuantity, setIsFetch, unsetIsFetch } from '@/app/redux/features/cart/cartSlice'
+import { openCart, setCartAmount, setCartLines, setCartQuantity, setIsFetch, unsetIsFetch } from '@/app/redux/features/cart/cartSlice'
 
 const CatalogCard = ({item}) => {
 
@@ -46,6 +46,7 @@ const CatalogCard = ({item}) => {
             if (res.data) {
                 dispatch(setCartQuantity(res.data.cartLinesAdd.cart.totalQuantity))
                 dispatch(setCartLines(res.data.cartLinesAdd.cart.lines.edges))
+                dispatch(setCartAmount(res.data.cartLinesAdd.cart.cost.totalAmount))
                 dispatch(unsetIsFetch(item.id))
                 dispatch(openCart())
             }

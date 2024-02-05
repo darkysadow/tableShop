@@ -6,6 +6,7 @@ import React, { useEffect } from 'react'
 import CartItem from './CartItem'
 import getCartFromShopify from '@/lib/actions/getCartFromShopify'
 import createCartOnShopify from '@/lib/actions/createCartOnShopify'
+import deleteFromCart from '@/lib/actions/deleteFromCart'
 
 const CartSidebar = () => {
     const isCartOpened = useAppSelector((state) => state.cart.isCartOpened)
@@ -37,6 +38,16 @@ const CartSidebar = () => {
             ? (document.body.style.overflowY = 'hidden')
             : (document.body.style.overflowY = 'scroll');
     }, [isCartOpened]);
+
+    const handleDeleteFromCart = async (selectedCartItem) => {
+        const deleteResult = await deleteFromCart(cart.cartId, selectedCartItem)
+        if (deleteResult) {
+            dispatch(setCartLines(deleteResult.lines.edges))
+            dispatch(setCartQuantity(deleteResult.totalQuantity))
+            dispatch(setCartAmount(deleteResult.cost.totalAmount))
+        }
+
+    }
 
     return (
         <div className={'fixed left-0 w-full h-[100vh] z-50 ' + `${isCartOpened ? ' bg-[#00000042] visible top-0' : ' bg-transparent invisible -top-full'}`}>
@@ -74,7 +85,7 @@ const CartSidebar = () => {
                     </p>
                 </div>
                 {
-                    cart?.lines.length !== 0
+                    cart?.lines && cart?.lines?.length !== 0
                 ? <>
                 <div className='overflow-y-auto scrolable-block '>
                     {
@@ -83,8 +94,10 @@ const CartSidebar = () => {
                             title={cartItem.node.merchandise.product.title}
                             material={cartItem.node.merchandise.title}
                             price={cartItem.node.merchandise.price.amount}
-                            amount={1}
-                            previewImageUrl={cartItem.node.merchandise.image.url} 
+                            amount={cartItem.node.quantity}
+                            variantId={cartItem.node.id}
+                            previewImageUrl={cartItem.node.merchandise.image.url}
+                            deleteFromCart={handleDeleteFromCart}
                         />))
                     }
                     

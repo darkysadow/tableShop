@@ -5,7 +5,7 @@ import React from 'react'
 
 const CartItem = ({
     title, previewImageUrl,
-    material, price, amount,
+    material, price, amount, variantId,
     changeAmount, deleteFromCart
 }) => {
     return (
@@ -35,7 +35,7 @@ const CartItem = ({
             </div>
             <span
                         className='mr-3 cursor-pointer text-xl transition-colors md:hover:text-[#bd8448]'
-                        onClick={() => console.log("Deleted from cart")}
+                        onClick={() => deleteFromCart(variantId)} 
                     >✖</span>
 
         </div>
