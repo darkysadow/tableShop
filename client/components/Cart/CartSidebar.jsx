@@ -10,8 +10,6 @@ import createCartOnShopify from '@/lib/actions/createCartOnShopify'
 const CartSidebar = () => {
     const isCartOpened = useAppSelector((state) => state.cart.isCartOpened)
     const cart = useAppSelector((state) => state.cart)
-
-    console.log(cart.totalAmount);
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -19,7 +17,6 @@ const CartSidebar = () => {
             let localCartData = JSON.parse(
                 window.localStorage.getItem('tableShop:shopify:cart')
             )
-
             if (localCartData) {
                 const cartInfo = await getCartFromShopify(localCartData.id)
                 dispatch(setCartId(localCartData.id))
@@ -28,23 +25,18 @@ const CartSidebar = () => {
                 dispatch(setCartAmount(cartInfo.data.cart.cost.totalAmount))
                 return
             }
-
             localCartData = await createCartOnShopify()
             dispatch(setCartId(localCartData.id))
-
             window.localStorage.setItem('tableShop:shopify:cart', JSON.stringify(localCartData))
         }
         getCart()
     }, [])
-
 
     useEffect(() => {
         isCartOpened
             ? (document.body.style.overflowY = 'hidden')
             : (document.body.style.overflowY = 'scroll');
     }, [isCartOpened]);
-
-    
 
     return (
         <div className={'fixed left-0 w-full h-[100vh] z-50 ' + `${isCartOpened ? ' bg-[#00000042] visible top-0' : ' bg-transparent invisible -top-full'}`}>
@@ -84,7 +76,7 @@ const CartSidebar = () => {
                 {
                     cart?.lines.length !== 0
                 ? <>
-                <div className='overflow-y-auto'>
+                <div className='overflow-y-auto scrolable-block '>
                     {
                         cart?.lines && cart.lines.map((cartItem, index) => (<CartItem
                             key={index}

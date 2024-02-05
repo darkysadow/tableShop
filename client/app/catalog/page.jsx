@@ -2,6 +2,7 @@ import CatalogCard from "@/components/Catalog/CatalogCard";
 import { shopifyData } from "@/lib/shopify";
 import Image from "next/image";
 import Link from "next/link";
+import { StoreProvider } from "../redux/provider";
 
 export default async function Catalog() {
     const query = `
@@ -27,6 +28,7 @@ export default async function Catalog() {
             variants (first: 5) {
                edges {
                 node {
+                  id
                   title
                 }
               }
@@ -52,8 +54,9 @@ export default async function Catalog() {
                 </div>
             </section>
             <section className="container mx-auto flex flex-row flex-wrap my-28">
+              <StoreProvider>
                 {data.products && data.products.edges.map((item, index) => (<CatalogCard key={index} item={item.node} />))}
-                
+              </StoreProvider>
             </section>
         </main>
     )

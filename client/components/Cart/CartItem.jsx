@@ -26,7 +26,7 @@ const CartItem = ({
                     <h4 className='text-lg'>{title}</h4>
                     <p className='text-sm text-slate-400'>Material: {material}</p>
                     <p className='text-lg text-black font-medium'>${price}</p>
-                    <div className='quick-view-form-inputBox flex flex-row md:w-1/2 justify-between items-center border-2 text-black max-md:w-full'>
+                    <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full'>
                         <button onClick={() => console.log('reduce')} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
                         <input type='number' value={amount} onChange={(e) => console.log(e.target.value)} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
                         <button onClick={() => console.log('increase')} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>

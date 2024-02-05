@@ -3,27 +3,41 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader'
+import { useAppSelector } from '@/app/redux/hooks'
+import addToCart from '@/lib/actions/addToCart'
 
 const CatalogCard = ({item}) => {
 
     
-    const [selectedVariant, setSelectedVariant] = useState('Oak Boras')
+    const [selectedVariant, setSelectedVariant] = useState({title: 'Oak Boras', id: undefined})
     const [mainImgLoaded, setMainImgLoaded] = useState(false)
     const [secondImgLoaded, setSecondImgLoaded] = useState(false)
-    const altForImage = item.title.split(' ')[0].toLowerCase()+"_"+ selectedVariant.toLowerCase().split(" ").join('-');
+    const altForImage = item.title.split(' ')[0].toLowerCase()+"_"+ selectedVariant.title.toLowerCase().split(" ").join('-');
     const previewMainImage = item.images.edges.find(image => image.node.altText === (altForImage + "_main"))?.node.url;
     const previewSecondImage = item.images.edges.find(image => image.node.altText === (altForImage + "_second"))?.node.url;
     const variantsNames = item.variants.edges.map((variant) => variant.node.title)
 
+    const cartId = useAppSelector((state) => state.cart.cartId)
+
+    useEffect(() => {
+        setSelectedVariant(item.variants.edges[0].node)
+    }, [])
+
     const changeMaterial = (material) => {
-        if (material !== selectedVariant) {
+        if (material !== selectedVariant.title) {
             setMainImgLoaded(false)
             setSecondImgLoaded(false)
-            setSelectedVariant(material)
+            const newMaterial = item.variants.edges.find(edge => edge.node.title === material).node
+            setSelectedVariant(newMaterial)
         }
         
+    }
+
+    const handleAddToCart = async () => {
+        const res = await addToCart(cartId, selectedVariant.id)
+        console.log(res);
     }
 
 
@@ -47,7 +61,7 @@ const CatalogCard = ({item}) => {
                         {variantsNames && variantsNames.map((variant, index) => (
                             <div 
                                 key={index} 
-                                className={`variant relative w-8 h-8 flex transition-all justify-center items-center rounded-full border-2 ` + `${selectedVariant === variant ? ' border-[#bd8448]' : " border-slate-300"}`}
+                                className={`variant relative w-8 h-8 flex transition-all justify-center items-center rounded-full border-2 ` + `${selectedVariant.title === variant ? ' border-[#bd8448]' : " border-slate-300"}`}
                                 onClick={() => changeMaterial(variant)}
                             >
                                 <div className='material-label opacity-0 invisible transition-all absolute left-[150%] inline-block text-nowrap px-4 bg-[rgba(0,0,0,0.85)] text-white text-sm rounded-md rounded-ss-none'>
@@ -81,7 +95,7 @@ const CatalogCard = ({item}) => {
                             <div className='flex flex-row gap-1 text-sm absolute leading-7 sale-card-price'>
                                 <span className='font-rubik'>${item.priceRange.minVariantPrice.amount}</span>
                             </div>
-                            <div className='absolute sale-card-addtocart font-rubik'>
+                            <div className='absolute sale-card-addtocart font-rubik' onClick={handleAddToCart}>
                                 Add to Cart +
                             </div>
                         </div>

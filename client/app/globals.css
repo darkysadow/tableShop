@@ -266,15 +266,18 @@
 }
 
 html::-webkit-scrollbar,
-body::-webkit-scrollbar {
+body::-webkit-scrollbar,
+.scrolable-block::-webkit-scrollbar {
   background-color: transparent;
   width: 5px;
 }
 
 html::-webkit-scrollbar-thumb,
-body::-webkit-scrollbar-thumb {
+body::-webkit-scrollbar-thumb,
+.scrolable-block::-webkit-scrollbar-thumb {
   background-color: #232323;
 }
+
 
 .lds-circle {
   display: inline-block;
