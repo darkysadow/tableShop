@@ -2,11 +2,12 @@
 
 import Image from 'next/image'
 import React from 'react'
+import ImagePreloader from '../Preloaders/ImagePreloader'
 
 const CartItem = ({
     title, previewImageUrl,
     material, price, amount, variantId,
-    changeAmount, deleteFromCart
+    isLoading, changeAmount, deleteFromCart
 }) => {
     return (
         <div className='w-full py-5 px-5 my-5 flex flex-row justify-between items-start'>
@@ -26,10 +27,11 @@ const CartItem = ({
                     <h4 className='text-lg'>{title}</h4>
                     <p className='text-sm text-slate-400'>Material: {material}</p>
                     <p className='text-lg text-black font-medium'>${price}</p>
-                    <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full'>
-                        <button onClick={() => console.log('reduce')} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
-                        <input type='number' value={amount} onChange={(e) => console.log(e.target.value)} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
-                        <button onClick={() => console.log('increase')} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>
+                    <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full relative'>
+                        <button disabled={isLoading?.status} onClick={() => changeAmount(variantId ,amount - 1)} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
+                        <input type='number' disabled={isLoading?.status} value={amount} onChange={(e) => e.target.value >= 1 && changeAmount(variantId, e.target.value)} min={1} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
+                        <button disabled={isLoading?.status} onClick={() => changeAmount(variantId, amount + 1)} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>
+                        {isLoading?.id === variantId && <div className='absolute w-full h-full z-40 flex justify-center items-center bg-[#0000000f]'></div>}
                     </div>
                 </div>
             </div>

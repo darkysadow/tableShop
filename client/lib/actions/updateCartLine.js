@@ -2,19 +2,16 @@
 
 import { shopifyData } from "../shopify"
 
-export default async function deleteFromCart(cartId, itemId) {
+export default async function updateCartLine(cartId, lineId, quantity) {
     const querry = `
-    mutation RemoveFromCart {
-        cartLinesRemove(
-          cartId: "${cartId}"
-          lineIds: ["${itemId}"]
-        ) {
+    mutation UpdateCartLine {
+        cartLinesUpdate(cartId: "${cartId}", lines: [{id: "${lineId}", quantity: ${quantity}}]) {
           cart {
             cost {
-                totalAmount {
-                  amount
-                  currencyCode
-                }
+              totalAmount {
+                amount
+                currencyCode
+              }
             }
             totalQuantity
             lines(first: 100) {
@@ -44,6 +41,8 @@ export default async function deleteFromCart(cartId, itemId) {
         }
       }
     `
+
     const res = await shopifyData(querry)
-    return res.data.cartLinesRemove.cart
+    return res.data.cartLinesUpdate.cart;
+
 }

@@ -1,16 +1,18 @@
 "use client"
 
-import { closeCart, setCartAmount, setCartId, setCartLines, setCartQuantity } from '@/app/redux/features/cart/cartSlice'
+import { closeCart, setCartAmount, setCartId, setCartLines, setCartQuantity, setUpdatingAmount, unsetUpdatingAmount } from '@/app/redux/features/cart/cartSlice'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import React, { useEffect } from 'react'
 import CartItem from './CartItem'
 import getCartFromShopify from '@/lib/actions/getCartFromShopify'
 import createCartOnShopify from '@/lib/actions/createCartOnShopify'
 import deleteFromCart from '@/lib/actions/deleteFromCart'
+import updateCartLine from '@/lib/actions/updateCartLine'
 
 const CartSidebar = () => {
     const isCartOpened = useAppSelector((state) => state.cart.isCartOpened)
     const cart = useAppSelector((state) => state.cart)
+    const isInputLoading = useAppSelector((state) => state.cart.updatingAmount)
     const dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -46,7 +48,17 @@ const CartSidebar = () => {
             dispatch(setCartQuantity(deleteResult.totalQuantity))
             dispatch(setCartAmount(deleteResult.cost.totalAmount))
         }
+    }
 
+    const handleChangeAmount = async(selectedCartItem, quantity) => {
+        dispatch(setUpdatingAmount(selectedCartItem))
+        const updateResult = await updateCartLine(cart.cartId, selectedCartItem, Number(quantity))
+        if (updateResult) {
+            dispatch(setCartLines(updateResult.lines.edges))
+            dispatch(setCartQuantity(updateResult.totalQuantity))
+            dispatch(setCartAmount(updateResult.cost.totalAmount))
+            dispatch(unsetUpdatingAmount(selectedCartItem))
+        }
     }
 
     return (
@@ -86,7 +98,7 @@ const CartSidebar = () => {
                 </div>
                 {
                     cart?.lines && cart?.lines?.length !== 0
-                ? <>
+                ? <div className='w-full h-full flex flex-col justify-between'>
                 <div className='overflow-y-auto scrolable-block '>
                     {
                         cart?.lines && cart.lines.map((cartItem, index) => (<CartItem
@@ -97,13 +109,16 @@ const CartSidebar = () => {
                             amount={cartItem.node.quantity}
                             variantId={cartItem.node.id}
                             previewImageUrl={cartItem.node.merchandise.image.url}
+                            isLoading={isInputLoading.length === 0 ? undefined : isInputLoading.find(item => item.id === cartItem.node.id)}
                             deleteFromCart={handleDeleteFromCart}
+                            changeAmount={handleChangeAmount}
                         />))
                     }
                     
                 </div>
-                <hr />
+                
                 <div className='w-full flex flex-col gap-y-2 px-4 py-5'>
+                <hr />
                     <div className='flex flex-row justify-between items-center'>
                         <p className='text-black font-medium text-lg'>Subtotal</p>
                         <p className='text-lg font-rubik'>${cart.totalAmount.amount}</p>
@@ -113,7 +128,7 @@ const CartSidebar = () => {
                         <button className='uppercase px-10 py-3 font-semibold text-sm transition-colors hover:bg-black bg-[#bd8448] text-white'>check out</button>
                     </div>
                 </div>
-                </> :
+                </div> :
                 <div className='w-full text-3xl text-[#000000a1] py-10 text-center'>Your cart is empty</div>
                 }
             </div>

@@ -34,27 +34,29 @@ export const getShopifyCart = async (cartId) => {
               currencyCode
             }
           }
-          lines(first: 100) {
+          lines (first: 100) {
             edges {
-                node {
-                  id
-                  merchandise {
-                    ... on ProductVariant {
-                      id
+              node {
+                id
+                quantity
+                merchandise {
+                  ... on ProductVariant {
+                    id
+                    title
+                    
+                    price {
+                      amount
+                    }
+                    image {
+                      url
+                    }
+                    product {
                       title
-                      price {
-                        amount
-                      }
-                      image {
-                        url
-                      }
-                      product {
-                        title
-                      }
                     }
                   }
                 }
               }
+            }
           }
         }
       }
