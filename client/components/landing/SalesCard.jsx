@@ -5,6 +5,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
+import QuickWiewDialog from '../Common/QuickWiewDialog'
 
 const SalesCard = ({ item }) => {
     const imagePath = `/wtp/${item.tableType}/${item.material}/`
@@ -78,7 +79,7 @@ const SalesCard = ({ item }) => {
                     </div>
                 </div>
             </div>
-            <Dialog open={dialogOpened} onClose={closeDialog} maxWidth='md'>
+            {/* <Dialog open={dialogOpened} onClose={closeDialog} maxWidth='md'>
                 <div className='relative'>
                     <div 
                         className='absolute right-0 top-0 w-10 h-10 text-black text-xl flex justify-center items-center cursor-pointer transition'
@@ -154,7 +155,26 @@ const SalesCard = ({ item }) => {
                         </div>
                     </DialogContent>
                 </div>
-            </Dialog>
+            </Dialog> */}
+            <QuickWiewDialog
+                amount={goodCountToAdd}
+                availability={item.availability}
+                closeDialog={closeDialog}
+                description={item.description}
+                dialogOpened={dialogOpened}
+                increaseCount={increaseCount}
+                mainImagePath={mainImagePath}
+                materialImagePath={materialImagePath}
+                price={item.oldPrice}
+                reduceCount={reduceCount}
+                salePrice={item.salePrice}
+                secondImagePath={secondImagePath}
+                thirdImagePath={thirdImagePath}
+                title={name}
+                tableType={item.tableType}
+                materialName={materialName}
+                onInputValueChange={onInputValueChange}
+            />
         </>
     )
 }

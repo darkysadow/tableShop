@@ -8,13 +8,21 @@ import ImagePreloader from '../Preloaders/ImagePreloader'
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import addToCart from '@/lib/actions/addToCart'
 import { openCart, setCartAmount, setCartLines, setCartQuantity, setIsFetch, unsetIsFetch } from '@/app/redux/features/cart/cartSlice'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { A11y, Navigation, Pagination } from 'swiper/modules'
+import { Dialog, DialogContent, Rating } from '@mui/material'
+import QuickWiewDialog from '../Common/QuickWiewDialog'
+
 
 const CatalogCard = ({item}) => {
 
     
-    const [selectedVariant, setSelectedVariant] = useState({title: 'Oak Boras', id: undefined})
+    const [selectedVariant, setSelectedVariant] = useState({title: 'Oak Boras', product: { productType: undefined}, id: undefined})
     const [mainImgLoaded, setMainImgLoaded] = useState(false)
     const [secondImgLoaded, setSecondImgLoaded] = useState(false)
+    const [isDialogOpened, setIsDialogOpened] = useState(false)
+    const [amount, setAmount] = useState(1)
+
     const altForImage = item.title.split(' ')[0].toLowerCase()+"_"+ selectedVariant.title.toLowerCase().split(" ").join('-');
     const previewMainImage = item.images.edges.find(image => image.node.altText === (altForImage + "_main"))?.node.url;
     const previewSecondImage = item.images.edges.find(image => image.node.altText === (altForImage + "_second"))?.node.url;
@@ -53,6 +61,28 @@ const CatalogCard = ({item}) => {
         }
     }
 
+    const closeDialog = () => {
+        setIsDialogOpened(false)
+    }
+
+    const increaseCount = () => {
+        setAmount(amount + 1)
+    }
+
+    const reduceCount = () => {
+        if (amount > 1) {
+            setAmount(amount - 1)
+        }
+    }
+
+    const onInputValueChange = (value) => {
+        value = Number(value)
+        if (value > 1) {
+            setAmount(value)
+        } else {
+            setAmount(1)
+        }
+    }
 
     return (
         <>
@@ -65,7 +95,7 @@ const CatalogCard = ({item}) => {
                     </div>
                     <div
                         className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[40%] max-xl:top-[40%] max-md:top-[40%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Quick\00a0View"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'
-                        
+                        onClick={() => setIsDialogOpened(true)}
                     ><span className='_icon-loup leading-4 text-lg'></span></div>
                     <Link href={'/catalog/'+item.id.split('/')[item.id.split('/').length-1]} className='sales-secondary-buttons absolute w-12 h-12 rounded-full border border-slate-200 top-[60%] max-xl:top-[70%] max-md:top-[60%] bg-white flex justify-center items-center before:opacity-0 before:invisible hover:before:visible transition-all before:transition-all hover:before:opacity-100 before:bg-[rgba(0,0,0,0.85)] before:text-sm before:absolute before:px-8 before:text-white before:w-auto before: before:z-40 before:content-["Visit\00a0Page"] before:right-[150%] hover:before:right-[105%] before:rounded-md  before:rounded-ee-none'>
                     <span className='_icon-totop leading-4 text-lg'></span>
@@ -119,6 +149,27 @@ const CatalogCard = ({item}) => {
                         <ImagePreloader />    
                     </div>}
             </div>
+            {
+                (previewMainImage && previewSecondImage) &&
+                <QuickWiewDialog
+                amount={amount}
+                availability={'In stock'}
+                closeDialog={closeDialog}
+                descriptionHtml={item.descriptionHtml}
+                dialogOpened={isDialogOpened}
+                increaseCount={increaseCount}
+                reduceCount={reduceCount}
+                mainImagePath={previewMainImage}
+                secondImagePath={previewSecondImage}
+                thirdImagePath={previewMainImage}
+                materialImagePath={previewSecondImage}
+                materialName={selectedVariant.title}
+                price={item.priceRange.minVariantPrice.amount}
+                onInputValueChange={onInputValueChange}
+                tableType={item.title.split(' ')[0]}
+                title={item.title}
+                materials={item.variants.edges}
+            />}
         </>
     )
 }

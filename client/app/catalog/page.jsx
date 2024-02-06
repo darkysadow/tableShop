@@ -12,6 +12,7 @@ export default async function Catalog() {
           node {
             id
             title
+            descriptionHtml
             images(first: 15) {
               edges{
                 node{
@@ -30,6 +31,9 @@ export default async function Catalog() {
                 node {
                   id
                   title
+                  product {
+                    productType
+                  }
                 }
               }
             }
@@ -39,7 +43,7 @@ export default async function Catalog() {
     }
     `
     const {data} = await shopifyData(query);
-    /* console.log(data.products.edges); */
+    
     return (
         <main>
             <section className="h-[55vh] max-[550px]:h-[40vh] relative flex justify-center items-center w-full catalog-head-block">
