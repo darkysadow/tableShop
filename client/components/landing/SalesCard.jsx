@@ -5,7 +5,7 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
-import QuickWiewDialog from '../Common/QuickWiewDialog'
+import QuickWiewDialog from '../Common/QuickViewDialog'
 
 const SalesCard = ({ item }) => {
     const imagePath = `/wtp/${item.tableType}/${item.material}/`

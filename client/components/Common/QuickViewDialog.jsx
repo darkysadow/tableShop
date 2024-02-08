@@ -5,17 +5,21 @@ import { Dialog, DialogContent, Rating } from '@mui/material'
 import Image from 'next/image'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { A11y, Navigation, Pagination } from 'swiper/modules'
-import MaterialPicker from '../Catalog/CatalogItem/MaterialPicker'
 
 
 import "swiper/css"
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import PopupMaterialPicker from '../Catalog/CatalogItem/PopupMaterialPicker'
+import ImagePreloader from '../Preloaders/ImagePreloader'
 
-const QuickWiewDialog = ({ dialogOpened, closeDialog, mainImagePath, secondImagePath,
+const QuickViewDialog = ({ dialogOpened, closeDialog, mainImagePath, secondImagePath,
     thirdImagePath, materialImagePath, title, salePrice = undefined, availability, price,
     amount, reduceCount, increaseCount, tableType, materialName, onInputValueChange,
-    materials = undefined, description = undefined, descriptionHtml = undefined,
+    materials = undefined, description = undefined, descriptionHtml = undefined, productId,
+    mnImgLoaded = true, secImgLoaded = true, thrdImgLoaded = true, matImgLoaded = true,
+    setMnImgLoaded = () => {return}, setSecImgLoaded = () => {return}, setThrdImgLoaded = () => {return},
+    setMatImgLoaded = () => {return}, addToCart = () => {return}
 }) => {
 
     return (
@@ -40,23 +44,35 @@ const QuickWiewDialog = ({ dialogOpened, closeDialog, mainImagePath, secondImage
                                 className='h-[60vh]'
                             >
                                 <SwiperSlide>
-                                    <div className='flex w-full h-full justify-center items-center'>
-                                        <Image src={mainImagePath} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
+                                    <div className='relative flex w-full h-full justify-center items-center'>
+                                        {!mnImgLoaded && <div className="absolute w-full h-full flex justify-center items-center">
+                                            <ImagePreloader />    
+                                        </div>}
+                                        <Image src={mainImagePath} width={1920} height={1080} onLoad={() => setMnImgLoaded(true)} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <div className='flex w-full h-full justify-center items-center'>
-                                        <Image src={secondImagePath} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
+                                    <div className='relative flex w-full h-full justify-center items-center'>
+                                        {!secImgLoaded && <div className="absolute w-full h-full flex justify-center items-center">
+                                            <ImagePreloader />    
+                                        </div>}
+                                        <Image src={secondImagePath} width={1920} height={1080} onLoad={() => setSecImgLoaded(true)} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <div className='flex w-full h-full justify-center items-center'>
-                                        <Image src={thirdImagePath} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
+                                    <div className='relative flex w-full h-full justify-center items-center'>
+                                        {!thrdImgLoaded && <div className="absolute w-full h-full flex justify-center items-center">
+                                            <ImagePreloader />    
+                                        </div>}
+                                        <Image src={thirdImagePath} width={1920} height={1080} onLoad={() => setThrdImgLoaded(true)} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
                                     </div>
                                 </SwiperSlide>
                                 <SwiperSlide>
-                                    <div className='flex w-full h-full justify-center items-center'>
-                                        <Image src={materialImagePath} width={1920} height={1080} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
+                                    <div className='relative flex w-full h-full justify-center items-center'>
+                                        {!matImgLoaded && <div className="absolute w-full h-full flex justify-center items-center">
+                                            <ImagePreloader />    
+                                        </div>}
+                                        <Image src={materialImagePath} width={1920} height={1080} onLoad={() => setMatImgLoaded(true)} style={{ objectFit: 'contain', objectPosition: 'center' }} alt={title + " image"} />
                                     </div>
                                 </SwiperSlide>
                             </Swiper>
@@ -84,14 +100,14 @@ const QuickWiewDialog = ({ dialogOpened, closeDialog, mainImagePath, secondImage
                                 {description}
                             </div>) :
                                 (<div className="quick-view-description line-clamp-3 w-full" dangerouslySetInnerHTML={{ __html: descriptionHtml }}></div>)}
-                            {materials && <MaterialPicker materials={materials} />}
+                            {materials && <PopupMaterialPicker materials={materials} id={productId} />}
                             <div className='quick-view-form flex md:flex-row justify-between my-5 max-md:flex-col max-md:gap-y-2'>
                                 <div className='quick-view-form-inputBox flex flex-row md:w-1/3 justify-between items-center border-2 text-black max-md:w-full'>
                                     <button onClick={reduceCount} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>
                                     <input type='number' value={amount} onChange={(e) => onInputValueChange(e.target.value)} className='[appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none text-center focus:outline-none w-full py-2' />
                                     <button onClick={increaseCount} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>+</button>
                                 </div>
-                                <button className='md:w-[calc(70%-40px)] bg-black text-white md:transition md:hover:bg-[#bd8448] max-md:w-full max-md:py-3'>Add To Cart</button>
+                                <button className='md:w-[calc(70%-40px)] bg-black text-white md:transition md:hover:bg-[#bd8448] max-md:w-full max-md:py-3' onClick={() => {addToCart(amount); closeDialog()}}>Add To Cart</button>
                             </div>
                             <div className='flex flex-row gap-1 mb-1'>
                                 Table type: <p className='text-black'>{tableType}</p>
@@ -107,4 +123,4 @@ const QuickWiewDialog = ({ dialogOpened, closeDialog, mainImagePath, secondImage
     )
 }
 
-export default QuickWiewDialog
+export default QuickViewDialog
