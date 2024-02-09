@@ -1,10 +1,12 @@
 import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { StoreProvider } from "@/app/redux/provider";
+import ViewIn3D from "@/components/3D/ViewIn3D";
 import AddToCart from "@/components/Catalog/CatalogItem/AddToCart";
 import Additionals from "@/components/Catalog/CatalogItem/Additionals";
 import ItemRating from "@/components/Catalog/CatalogItem/ItemRating";
 import MaterialPicker from "@/components/Catalog/CatalogItem/MaterialPicker";
 import ProductImageSlider from "@/components/Catalog/CatalogItem/ProductImageSlider";
+import ViewIn3DButton from "@/components/Catalog/CatalogItem/ViewIn3DButton";
 import DiscountInfo from "@/components/landing/DiscountInfo";
 import { shopifyData } from "@/lib/shopify";
 import Link from "next/link";
@@ -83,6 +85,7 @@ export default async function CatalogItem({ params }) {
               <hr />
             </div>
             <StoreProvider>
+              <ViewIn3DButton />
               <MaterialPicker materials={product.variants.edges} />
               <AddToCart />
             </StoreProvider>
@@ -96,6 +99,9 @@ export default async function CatalogItem({ params }) {
         <Additionals metafields={product.metafields} />
       </section>
       <DiscountInfo />
+      <StoreProvider>
+        <ViewIn3D />
+      </StoreProvider>
     </main>
   )
 }
