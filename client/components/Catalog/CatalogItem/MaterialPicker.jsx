@@ -6,7 +6,7 @@ import { changeMaterial } from '@/app/redux/features/cardMaterial/cardMaterialSl
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks'
 import MaterialPickerSkeleton from './MaterialPickerSkeleton'
 
-const MaterialPicker = ({ materials }) => {
+const MaterialPicker = ({ materials, titleBackground = false }) => {
     const material = useAppSelector((state) => state.cardMaterial.value)
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -19,7 +19,7 @@ const MaterialPicker = ({ materials }) => {
     if (material) {
         return (
             <div className="flex flex-col items-start my-5">
-                <p>Material: <span className="font-medium">{material.node.title}</span></p>
+                <p className={`${titleBackground && "bg-white rounded-md px-2 text-nowrap"}`}>Material: <span className="font-medium">{material.node.title}</span></p>
                 <div className="flex w-full justify-center flex-row gap-x-3 items-end">
                     {materials && materials.map((variant, index) => (
                         <div key={index}

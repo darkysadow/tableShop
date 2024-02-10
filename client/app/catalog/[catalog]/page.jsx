@@ -1,4 +1,3 @@
-import { useAppDispatch, useAppSelector } from "@/app/redux/hooks";
 import { StoreProvider } from "@/app/redux/provider";
 import ViewIn3D from "@/components/3D/ViewIn3D";
 import AddToCart from "@/components/Catalog/CatalogItem/AddToCart";
@@ -51,6 +50,19 @@ export default async function CatalogItem({ params }) {
             }
           }
         }
+        media (first: 100) {
+          edges {
+            node {
+              ... on Model3d {
+                sources {
+                  format
+                  
+                  url
+                }
+              }
+            }
+          }
+        }
       }
     }
     `
@@ -100,7 +112,7 @@ export default async function CatalogItem({ params }) {
       </section>
       <DiscountInfo />
       <StoreProvider>
-        <ViewIn3D />
+        <ViewIn3D materials={product.variants.edges} model={product.media.edges.find(item => item?.node?.sources).node.sources.find(item => item.format === "glb")} />
       </StoreProvider>
     </main>
   )

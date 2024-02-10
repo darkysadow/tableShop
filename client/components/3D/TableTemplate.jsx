@@ -1,7 +1,11 @@
-import React from "react";
-import { useGLTF } from "@react-three/drei";
+"use client"
 
-export function TableTemplate({ legsColor = "#000000", modelLink }) {
+import React from "react";
+import { useGLTF, useTexture } from "@react-three/drei";
+import * as THREE from 'three';
+
+
+export function TableTemplate({ legsColor = "#000000", modelLink, tabletopMaterial, setIsTextureLoaded }) {
   const { nodes } = useGLTF(modelLink);
   useGLTF.preload(modelLink);
   //Tabletop node must begin with the word "TableTop_" (with underscore in the) 
@@ -10,6 +14,26 @@ export function TableTemplate({ legsColor = "#000000", modelLink }) {
   // 
   const tabletopSelector = nodesKeyNames.find(item => item.split("_")[0] === "TableTop")
   const legsSelectors = nodesKeyNames.filter(item => item !== tabletopSelector)
+
+  //Tabletop Material settings
+  const tableTopMaterialProps = useTexture({
+    map: `/materials/${tabletopMaterial.toLowerCase().split(' ').join("_")}/Color.jpg`,
+    roughnessMap: `/materials/${tabletopMaterial.toLowerCase().split(' ').join("_")}/Roughness.jpg`,
+    normalMap: `/materials/${tabletopMaterial.toLowerCase().split(' ').join("_")}/NormalMap.png`
+  }, (onLoad) => {setIsTextureLoaded(true)} )
+
+  tableTopMaterialProps.map.repeat.set(4, 4);
+  tableTopMaterialProps.map.rotation = Math.PI / 2
+  tableTopMaterialProps.roughnessMap.rotation = Math.PI / 2
+  tableTopMaterialProps.roughnessMap.repeat.set(4, 4);
+  tableTopMaterialProps.normalMap.rotation = Math.PI / 2
+  tableTopMaterialProps.normalMap.repeat.set(4, 4);
+  tableTopMaterialProps.map.wrapS = tableTopMaterialProps.map.wrapT =
+    THREE.MirroredRepeatWrapping;
+  tableTopMaterialProps.roughnessMap.wrapS =
+    tableTopMaterialProps.roughnessMap.wrapT = THREE.MirroredRepeatWrapping;
+  tableTopMaterialProps.normalMap.wrapS = tableTopMaterialProps.normalMap.wrapT =
+    THREE.MirroredRepeatWrapping;
 
   return (
     <group dispose={null}>
@@ -28,6 +52,7 @@ export function TableTemplate({ legsColor = "#000000", modelLink }) {
         <meshStandardMaterial
           roughness={nodes[tabletopSelector].material.roughness}
           metalness={nodes[tabletopSelector].material.metalness}
+          {...tableTopMaterialProps}
         />
       </mesh>
       {
