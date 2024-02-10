@@ -5,6 +5,9 @@ import { createSlice } from "@reduxjs/toolkit"
 const initialState = {
     dialog: {
         opened: false,
+    },
+    table: {
+        legsColor: '#000000'
     }
 }
 
