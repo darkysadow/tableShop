@@ -54,10 +54,11 @@ const CatalogCard = ({ item }) => {
         }
     }
 
-    const handleAddToCart = async (count = 1) => {
+    const handleAddToCart = async (selectedQuantity = 1) => {
+        debugger
         if (!isCartDataFetching.find(cartItem => cartItem.id === item.id)?.status) {
             dispatch(setIsFetch(item.id))
-            const res = await addToCart(cartId, cardPopupMaterial.id, count)
+            const res = await addToCart(cartId, cardPopupMaterial.id, selectedQuantity)
             if (res.data) {
                 dispatch(setCartQuantity(res.data.cartLinesAdd.cart.totalQuantity))
                 dispatch(setCartLines(res.data.cartLinesAdd.cart.lines.edges))
@@ -146,7 +147,7 @@ const CatalogCard = ({ item }) => {
                                 <div className='flex flex-row gap-1 text-sm absolute leading-7 sale-card-price'>
                                     <span className='font-rubik'>${item.priceRange.minVariantPrice.amount}</span>
                                 </div>
-                                <div className='absolute sale-card-addtocart font-rubik' onClick={handleAddToCart}>
+                                <div className='absolute sale-card-addtocart font-rubik' onClick={() => handleAddToCart()}>
                                     Add to Cart +
                                 </div>
                             </div>
