@@ -7,6 +7,7 @@ import { StoreProvider } from "../redux/provider";
 export default async function Catalog() {
     const query = `
     {
+      collection(handle: "tables") {
         products (first: 15) {
         edges {
           node {
@@ -40,9 +41,10 @@ export default async function Catalog() {
           }
         }
       }
+      }
     }
     `
-    const {data} = await shopifyData(query);
+    const data = await shopifyData(query).then(res => res.data.collection);
     
     return (
         <main>

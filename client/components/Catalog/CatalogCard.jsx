@@ -55,7 +55,6 @@ const CatalogCard = ({ item }) => {
     }
 
     const handleAddToCart = async (selectedQuantity = 1) => {
-        debugger
         if (!isCartDataFetching.find(cartItem => cartItem.id === item.id)?.status) {
             dispatch(setIsFetch(item.id))
             const res = await addToCart(cartId, cardPopupMaterial.id, selectedQuantity)
