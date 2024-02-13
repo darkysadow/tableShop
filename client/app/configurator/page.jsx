@@ -1,15 +1,15 @@
 "use client"
 
-import Configurator from '@/components/3D/Configurator'
-import { Accordion, AccordionDetails, AccordionSummary, Button, Step, StepContent, StepLabel, Stepper, Typography } from '@mui/material'
-import { Box, PresentationControls, Stage } from '@react-three/drei'
+import { Configurator } from '@/components/3D/Configurator'
+import { Button, Step, StepContent, StepLabel, Stepper, Typography } from '@mui/material'
+import { Box, PresentationControls, Stage} from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import React, { useEffect, useState } from 'react'
 
 export default function ConfiguratorPage() {
 
     const [selectedTabletopShape, setSelectedTabletopShape] = useState(undefined)
-    const [selectedTabletopSize, setSelectedTabletopSize] = useState(undefined)
+    const [selectedTabletopSize, setSelectedTabletopSize] = useState('120x65cm')
     const [selectedTabletopMaterial, setSelectedTabletopMaterial] = useState(undefined)
     const [selectedLegsType, setSelectedLegsType] = useState(undefined)
     const [activeStep, setActiveStep] = useState(0);
@@ -44,13 +44,13 @@ export default function ConfiguratorPage() {
             title: 'Size of the table top',
             values: [
                 {
-                    label: '120x70cm'
+                    label: '120x65cm'
+                },
+                {
+                    label: '130x65cm'
                 },
                 {
                     label: '130x70cm'
-                },
-                {
-                    label: '130x80cm'
                 }
             ]
         },
@@ -105,19 +105,23 @@ export default function ConfiguratorPage() {
         switch (characteristic) {
             case 'Shape of the table top':
                 setSelectedTabletopShape(value)
+                break
             case 'Size of the table top':
                 setSelectedTabletopSize(value)
+                break
             case 'Material of the table top':
                 setSelectedTabletopMaterial(value)
+                break
             case 'Legs type':
                 setSelectedLegsType(value)
+                break
             default:
                 return
         }
     }
 
     const selectedCharacteristicOption = (characteristic) => {
-        switch(characteristic) {
+        switch (characteristic) {
             case 'Shape of the table top':
                 return selectedTabletopShape
             case 'Size of the table top':
@@ -186,116 +190,27 @@ export default function ConfiguratorPage() {
                 </div>
             </div>
             <div className='h-[calc(100vh-86px)] md:w-2/3 max-md:w-full'>
-                <Configurator />
+                <Canvas dpr={[1, 2]}>
+                    <color attach='background' args={["#ffffff"]} />
+                    <PresentationControls
+                        speed={3}
+                        global
+                        polar={[-0.3, Math.PI / 6]}
+                        rotation={[Math.PI / 8, Math.PI / 4, 0]}
+                        zoom={1.1}
+
+                    >
+                        <Stage environment="city" shadows={false} intensity={3}>
+                            <Configurator
+                                tabletopShape={selectedTabletopShape}
+                                tabletopSize={selectedTabletopSize.split('cm')[0]}
+                                material={selectedTabletopMaterial}
+                                legsType={selectedLegsType}
+                            />
+                        </Stage>
+                    </PresentationControls>
+                </Canvas>
             </div>
         </main>
     )
 }
-
-{/* <Accordion 
-                    expanded={expanded === 'panel1'} 
-                    onChange={handleAccordionChange('panel1')}
-                    style={{margin: '0px'}}
-                >
-                    <AccordionSummary>
-                        <Typography>Shape of the table top</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className='flex w-full gap-[3%] flex-row'>
-                    <div 
-                            onClick={() => setSelectedTabletopShape('straight')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${selectedTabletopShape === 'straight' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>Straight</h3>
-                        </div>
-                        <div 
-                            onClick={() => setSelectedTabletopShape('rounded')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${selectedTabletopShape === 'rounded' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>Rounded</h3>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion 
-                    expanded={expanded === 'panel2'} 
-                    onChange={handleAccordionChange('panel2')}
-                    style={{margin: '0px'}}
-                >
-                    <AccordionSummary>
-                        <Typography>Size of the table top</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className='flex w-full gap-[3%] flex-row'>
-                    <div 
-                            onClick={() => setSelectedTabletopSize('120x70cm')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-center font-medium items-center bg-[#00000007] rounded-lg h-10 border transition-all hover:bg-[#00000010] cursor-pointer ${selectedTabletopSize === '120x70cm' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <h3 className='text-xs'>120x70cm</h3>
-                        </div>
-                        <div 
-                            onClick={() => setSelectedTabletopSize('130x70cm')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-center font-medium items-center bg-[#00000007] rounded-lg h-10 border transition-all hover:bg-[#00000010] cursor-pointer ${selectedTabletopSize === '130x70cm' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <h3 className='text-xs'>130x70cm</h3>
-                        </div>
-                        <div 
-                            onClick={() => setSelectedTabletopSize('130x80cm')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-center font-medium items-center bg-[#00000007] rounded-lg h-10 border transition-all hover:bg-[#00000010] cursor-pointer ${selectedTabletopSize === '130x80cm' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <h3 className='text-xs'>130x80cm</h3>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion 
-                    expanded={expanded === 'panel3'} 
-                    onChange={handleAccordionChange('panel3')}
-                    style={{margin: '0px'}}
-                >
-                    <AccordionSummary>
-                        <Typography>Material of the table top</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className='flex w-full gap-[3%] flex-row'>
-                    <div 
-                            onClick={() => setSelectedTabletopShape('straight')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${setSelectedTabletopShape === 'straight' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>name of shape</h3>
-                        </div>
-                        <div 
-                            onClick={() => setSelectedTabletopShape('rounded')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${setSelectedTabletopShape === 'rounded' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>text</h3>
-                        </div>
-                    </AccordionDetails>
-                </Accordion>
-                <Accordion 
-                    expanded={expanded === 'panel4'} 
-                    onChange={handleAccordionChange('panel4')}
-                    style={{margin: '0px'}}
-                >
-                    <AccordionSummary>
-                        <Typography>Legs type</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails className='flex w-full gap-[3%] flex-row'>
-                    <div 
-                            onClick={() => setSelectedTabletopShape('straight')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${setSelectedTabletopShape === 'straight' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>name of shape</h3>
-                        </div>
-                        <div 
-                            onClick={() => setSelectedTabletopShape('rounded')}
-                            className={`w-[30%] flex py-1 px-1 flex-col justify-between items-center bg-[#00000007] rounded-lg h-20 border transition-all hover:bg-[#00000010] cursor-pointer ${setSelectedTabletopShape === 'rounded' ? " border-[#bd8448]" : " border-transparent"}`}>
-                            <div>
-                                Image
-                            </div>
-                            <h3 className='text-xs'>text</h3>
-                        </div>
-                    </AccordionDetails>
-                </Accordion> */}
