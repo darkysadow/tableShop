@@ -19,7 +19,13 @@ export function Configurator() {
             x: Number(store.selected.size.split('x')[0]) / 200,
             z: Number(store.selected.size.split('x')[1].split('cm')[0]) / 200
         }
-        const tabletopSceneArray = tabletops.map((tabletopShape) => useGLTF(tabletopShape.link).nodes)
+
+        const handlerUseGLTF = (url) => {
+            const result = useGLTF(url)
+            return result
+        }
+
+        const tabletopSceneArray = tabletops.map((tabletopShape) => handlerUseGLTF(tabletopShape.link).nodes)
         const tabletopModelsArray = tabletopSceneArray.map((tabletopScene) => {
             const { Scene, ...rest } = tabletopScene;
             return rest;
