@@ -34,7 +34,6 @@ export function TableTemplate({ legsColor = "#000000", modelLink, tabletopMateri
     tableTopMaterialProps.roughnessMap.wrapT = THREE.MirroredRepeatWrapping;
   tableTopMaterialProps.normalMap.wrapS = tableTopMaterialProps.normalMap.wrapT =
     THREE.MirroredRepeatWrapping;
-
   return (
     <group dispose={null}>
       <mesh
