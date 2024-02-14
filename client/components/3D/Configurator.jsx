@@ -7,16 +7,10 @@ import React, { useEffect } from 'react'
 import * as THREE from 'three';
 
 export function Configurator() {
-    const store = useAppSelector((state) => state.configurator)
-    const texturesArray = store.tabletopMaterials.map(mat => ({
-        title: mat?.label,
-        texture: useTexture({
-            map: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/Color.jpg`,
-            roughnessMap: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/Roughness.jpg`,
-            normalMap: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/NormalMap.png`
-        })
-    }))
-    if (store.initialized) {
+    const storeInitialized = useAppSelector((state) => state.configurator.initialized)
+    
+    if (storeInitialized) {
+        const store = useAppSelector((state) => state.configurator)
         const tabletops = store.tabletopShapes
         const materials = store.tabletopMaterials
         const selectedTabletopShape = store.selected.shape
@@ -37,8 +31,15 @@ export function Configurator() {
             }
         });
         const objectWithSelectedForm = tempObjectWithSelectedForm ? tempObjectWithSelectedForm[Object.keys(tempObjectWithSelectedForm)[0]] : undefined
-
-        
+        const texturesArray = store.tabletopMaterials.map(mat => ({
+            title: mat?.label,
+            texture: useTexture({
+                map: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/Color.jpg`,
+                roughnessMap: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/Roughness.jpg`,
+                normalMap: `/materials/${mat?.label.toLowerCase().split(' ').join("_")}/NormalMap.png`
+            })
+        }))
+        console.log(selectedMaterial);
 
         return (
             <group dispose={null} position={[0, 0, 0]}>
@@ -56,7 +57,12 @@ export function Configurator() {
                     ]}
                 >
                     { texturesArray !== undefined  ?
-                        <meshStandardMaterial {...texturesArray[1].texture} />
+                        selectedMaterial === texturesArray[0].title ?
+                            <meshStandardMaterial {...texturesArray[0].texture} />
+                        : selectedMaterial === texturesArray[1].title ?
+                            <meshStandardMaterial {...texturesArray[1].texture} />
+                        : selectedMaterial === texturesArray[2].title &&
+                            <meshStandardMaterial {...texturesArray[2].texture} />
                     : <meshStandardMaterial />
                     }
                 </mesh>}
