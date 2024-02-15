@@ -5,7 +5,7 @@ import ConfiguratorMenu from '@/components/3D/ConfiguratorMenu'
 import { StoreProvider } from '../redux/provider'
 import { Canvas } from '@react-three/fiber'
 import { PresentationControls, Stage } from '@react-three/drei'
-import { Configurator } from '@/components/3D/Configurator'
+import { ConfiguratorWrapper } from '@/components/3D/ConfiguratorWrapper'
 
 export default function ConfiguratorPage() {
     const steps = [
@@ -59,27 +59,33 @@ export default function ConfiguratorPage() {
             values: [
                 {
                     label: 'Atlant',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/atlant.glb'
                 },
                 {
                     label: 'Skver',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/skver.glb'
                 },
                 {
                     label: 'Trapezia',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/trapezia.glb'
                 },
                 {
                     label: 'Lima',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/lima.glb'
                 },
                 {
                     label: 'Linda',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/linda.glb'
                 },
                 {
                     label: 'Ishla',
-                    imgSrc: 'url'
+                    imgSrc: 'url',
+                    link: '/models/Parts/Legs/ishla.glb'
                 }
             ]
         },
@@ -100,7 +106,7 @@ export default function ConfiguratorPage() {
                             zoom={1}
                         >
                             <Stage environment="city" shadows={false} intensity={3}>
-                                <Configurator />
+                                <ConfiguratorWrapper items={steps} />
                             </Stage>
                         </PresentationControls>
                     </Canvas>

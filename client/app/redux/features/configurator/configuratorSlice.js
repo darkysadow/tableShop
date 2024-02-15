@@ -29,7 +29,8 @@ const initialState = {
         size: undefined,
         material: undefined,
         legsType: undefined
-    }
+    },
+    loadedShape: undefined
 }
 
 export const configuratorSlice = createSlice({
@@ -46,7 +47,8 @@ export const configuratorSlice = createSlice({
                 initialized: true,
                 selected: {
                     ...state.selected,
-                    size: state.selected.size ? state.selected.size : action.payload.tabletopSizes[0]
+                    size: state.selected.size ? state.selected.size : action.payload.tabletopSizes[0],
+                    material: state.selected.material ? state.selected.material : action.payload.tabletopMaterials[0]
                 }
             }
         },
@@ -58,10 +60,16 @@ export const configuratorSlice = createSlice({
                   [action.payload.option]: action.payload.value
                 }
               };
+        },
+        setLoadedShape: (state, action) => {
+            return {
+                ...state,
+                loadedShape: action.payload
+            }
         }
     }
 })
 
-export const {initializeConfiguratorState, setSelectedOption} = configuratorSlice.actions
+export const {initializeConfiguratorState, setSelectedOption, setLoadedShape} = configuratorSlice.actions
 
 export default configuratorSlice.reducer
