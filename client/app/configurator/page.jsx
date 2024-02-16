@@ -14,12 +14,12 @@ export default function ConfiguratorPage() {
             values: [
                 {
                     label: 'Straight',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Tabletops/straight.png',
                     link: "/models/Parts/Tabletops/straight_tabletop_120x65.glb"
                 },
                 {
                     label: 'Rounded',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Tabletops/rounded.png',
                     link: "/models/Parts/Tabletops/rounded_tabletop_120x65.glb"
                 }
             ]
@@ -59,32 +59,32 @@ export default function ConfiguratorPage() {
             values: [
                 {
                     label: 'Atlant',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/atlant.png',
                     link: '/models/Parts/Legs/atlant.glb'
                 },
                 {
                     label: 'Skver',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/skver.png',
                     link: '/models/Parts/Legs/skver.glb'
                 },
                 {
                     label: 'Trapezia',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/trapezia.png',
                     link: '/models/Parts/Legs/trapezia.glb'
                 },
                 {
                     label: 'Lima',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/lima.png',
                     link: '/models/Parts/Legs/lima.glb'
                 },
                 {
                     label: 'Linda',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/linda.png',
                     link: '/models/Parts/Legs/linda.glb'
                 },
                 {
                     label: 'Ishla',
-                    imgSrc: 'url',
+                    imgSrc: '/models/Parts/Legs/ishla.png',
                     link: '/models/Parts/Legs/ishla.glb'
                 }
             ]
@@ -92,10 +92,10 @@ export default function ConfiguratorPage() {
     ]
 
     return (
-        <main className='container mx-auto px-2 relative min-h-[calc(100vh-86px)] pb-5'>
+        <main className='container mx-auto px-2 relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse'>
             <StoreProvider>
                 <ConfiguratorMenu steps={steps} />
-                <div className='h-[calc(100vh-86px)] md:w-2/3 max-md:w-full'>
+                <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] max-md:w-full'>
                     <Canvas dpr={[1, 2]}>
                         <color attach='background' args={["#ffffff"]} />
                         <PresentationControls
