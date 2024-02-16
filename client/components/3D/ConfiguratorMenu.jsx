@@ -4,6 +4,7 @@ import { initializeConfiguratorState, setSelectedOption } from '@/app/redux/feat
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
 import React, { useEffect } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader';
+import Image from 'next/image';
 
 const ConfiguratorMenu = ({ steps }) => {
 
@@ -51,7 +52,7 @@ const ConfiguratorMenu = ({ steps }) => {
                                     onClick={() => dispatch(setSelectedOption({ option: 'size', value: size }))}
                                     className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${size.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.size === size ? ' border-[#bd8448]' : ' border-transparent'}`}
                                 >
-                                    <h3  className='text-xs font-medium'>{size}</h3>
+                                    <h3 className='text-xs font-medium'>{size}</h3>
                                 </div>
                             ))}
                         </div>
@@ -65,8 +66,18 @@ const ConfiguratorMenu = ({ steps }) => {
                                     onClick={() => dispatch(setSelectedOption({ option: 'material', value: material }))}
                                     className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${material.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.material === material ? ' border-[#bd8448]' : ' border-transparent'}`}
                                 >
-                                    {material.imgSrc && <div>{material.imgSrc}</div>}
-                                    <h3 className='text-xs font-medium'>{material.label}</h3>
+                                    {/* {material.imgSrc && <div>{material.imgSrc}</div>} */}
+                                    <div className='relative w-[3.5vw] h-[6vw] rounded-lg'>
+                                        <Image
+                                            priority={false}
+                                            alt={`${material.label} material`}
+                                            src={`/materialPreview/${material.label.toLowerCase().split(' ').join('_')}/Color.jpg`}
+                                            fill
+                                            style={{ position: "absolute", objectFit: 'cover', borderRadius: '8px' }}
+                                            sizes='100%'
+                                        />
+                                    </div>
+                                    <h3 className='text-xs [word-spacing:99999px] font-medium text-center '>{material.label}</h3>
                                 </div>
                             ))}
                         </div>
