@@ -6,7 +6,7 @@ import React, { useEffect } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader';
 import Image from 'next/image';
 
-const ConfiguratorMenu = ({ steps }) => {
+const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
 
     const store = useAppSelector((state) => state.configurator)
     const dispatch = useAppDispatch()
@@ -23,7 +23,10 @@ const ConfiguratorMenu = ({ steps }) => {
 
     if (store.initialized) {
         return (
-            <div className='md:absolute max-md:w-full px-4 py-4 flex flex-col  rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
+            <div
+                onPointerDown={() => setOverflowY(false)}
+                onMouseEnter={() => setOverflowY(false)} 
+                className='md:absolute max-md:w-full px-4 py-4 flex flex-col  rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
                 <h1 className='tracking-wide text-2xl'>Choose the:</h1>
                 <div className='w-full my-5 h-5/6 md:overflow-y-auto max-md:overflow-x-auto md:scrolable-block_gray max-md:scrolable-block-y_gray md:pr-[5px] flex md:flex-col md:gap-y-3 max-md:flex-row max-md:gap-x-3 max-md:h-[22vh]'>
                     <div className='w-full flex flex-col gap-y-2 bg-white py-2 px-2 rounded-t-lg'>

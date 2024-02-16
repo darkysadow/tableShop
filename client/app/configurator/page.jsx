@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ConfiguratorMenu from '@/components/3D/ConfiguratorMenu'
 import { StoreProvider } from '../redux/provider'
 import { Canvas } from '@react-three/fiber'
@@ -91,15 +91,29 @@ export default function ConfiguratorPage() {
         },
     ]
 
+    const [overflowY, setOverflowY] = useState(false)
+
+    useEffect(() => {
+        console.log(overflowY);
+        overflowY
+            ? (document.body.style.overflowY = 'hidden')
+            : (document.body.style.overflowY = 'scroll');
+    }, [overflowY]);
+
+    const [windowWidth, setWindowWidth] = useState(undefined)
+    useEffect(() => {
+        setWindowWidth(window.innerWidth)
+    }, [])
+
     return (
         <main className='container mx-auto px-2 relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse'>
             <StoreProvider>
-                <ConfiguratorMenu steps={steps} />
+                <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} />
                 <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] max-md:w-full'>
-                    <Canvas dpr={[1, 2]}>
+                    <Canvas dpr={[1, 2]} onMouseEnter={() => setOverflowY(true)} onMouseLeave={() => setOverflowY(false)} onPointerDown={() => setOverflowY(true)} onPointerUp={() => setOverflowY(false)} /* onPointerOut={() => setOverflowY(false)} */>
                         <color attach='background' args={["#ffffff"]} />
                         <PresentationControls
-                            speed={3}
+                            speed={1 + (11 * (2560 - windowWidth)) / (2560 - 320)}
                             global
                             polar={[-0.3, Math.PI / 6]}
                             rotation={[Math.PI / 8, Math.PI / 4, 0]}
