@@ -13,10 +13,10 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
     useEffect(() => {
         if (!store.initialized) {
             dispatch(initializeConfiguratorState({
-                tabletopShapes: steps[0].values,
-                tabletopSizes: steps[1].values.map(item => item.label),
-                tabletopMaterials: steps[2].values,
-                legsTypes: steps[3].values
+                tabletopShapes: steps.shapes,
+                tabletopSizes: steps.sizes.map(item => item.label),
+                tabletopMaterials: steps.materials,
+                legsTypes: steps.legsTypes
             }))
         }
     }, [steps])
@@ -69,20 +69,6 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                             ))}
                         </div>
                     </div>
-                    {/* <div className='w-[80vw] flex flex-col gap-y-2 max-md:overflow-x-auto bg-white py-2 px-2'>
-                        <h2>Size of the table top</h2>
-                        <div className='md:w-full max-md:w-[80vw] flex flex-row md:flex-wrap gap-x-[3%] gap-y-2'>
-                            {store.tabletopSizes.map((size, index) => (
-                                <div
-                                    key={index}
-                                    onClick={() => dispatch(setSelectedOption({ option: 'size', value: size }))}
-                                    className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${size.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.size === size ? ' border-[#bd8448]' : ' border-transparent'}`}
-                                >
-                                    <h3 className='text-xs font-medium'>{size}</h3>
-                                </div>
-                            ))}
-                        </div>
-                    </div> */}
                     <div className='w-full flex flex-col gap-y-2 bg-white py-2 px-2'>
                         <h2>Material of the table top</h2>
                         <div className='md:w-full max-md:w-[80vw] flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
@@ -90,9 +76,8 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                                 <div
                                     key={index}
                                     onClick={() => dispatch(setSelectedOption({ option: 'material', value: material }))}
-                                    className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${material.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.material === material ? ' border-[#bd8448]' : ' border-transparent'}`}
+                                    className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer h-20 justify-between items-center' + `${store.selected?.material === material ? ' border-[#bd8448]' : ' border-transparent'}`}
                                 >
-                                    {/* {material.imgSrc && <div>{material.imgSrc}</div>} */}
                                     <div className='relative max-md:w-[45px] max-md:h-[45px] md:h-[6vw] md:w-[3.5vw] rounded-lg'>
                                         <Image
                                             priority={false}
