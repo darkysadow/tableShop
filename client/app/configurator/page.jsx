@@ -6,6 +6,7 @@ import { StoreProvider } from '../redux/provider'
 import { Canvas } from '@react-three/fiber'
 import { PresentationControls, Stage } from '@react-three/drei'
 import { ConfiguratorWrapper } from '@/components/3D/ConfiguratorWrapper'
+import getTabletops from '@/lib/actions/getTabletops'
 
 export default function ConfiguratorPage() {
     const steps = [
@@ -94,7 +95,14 @@ export default function ConfiguratorPage() {
     const [overflowY, setOverflowY] = useState(false)
 
     useEffect(() => {
-        console.log(overflowY);
+        const fetchData = async () => {
+            const res = await getTabletops()
+            console.log(res);
+        }
+        fetchData()
+    }, [])
+
+    useEffect(() => {
         overflowY
             ? (document.body.style.overflowY = 'hidden')
             : (document.body.style.overflowY = 'scroll');
@@ -110,7 +118,7 @@ export default function ConfiguratorPage() {
             <StoreProvider>
                 <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} />
                 <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] max-md:w-full'>
-                    <Canvas dpr={[1, 2]} onMouseEnter={() => setOverflowY(true)} onMouseLeave={() => setOverflowY(false)} onPointerDown={() => setOverflowY(true)} onPointerUp={() => setOverflowY(false)} /* onPointerOut={() => setOverflowY(false)} */>
+                    <Canvas dpr={[1, 2]} onPointerDown={() => setOverflowY(true)} onPointerUp={() => setOverflowY(false)} /* onPointerOut={() => setOverflowY(false)} */>
                         <color attach='background' args={["#ffffff"]} />
                         <PresentationControls
                             speed={1 + (11 * (2560 - windowWidth)) / (2560 - 320)}
