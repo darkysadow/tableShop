@@ -2,13 +2,16 @@
 
 import { initializeConfiguratorState, setSelectedOption } from '@/app/redux/features/configurator/configuratorSlice';
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader';
 import Image from 'next/image';
+import addConfiguratedToCart from '@/lib/actions/addConfiguratedToCart';
+import { openCart, setCartAmount, setCartLines, setCartQuantity } from '@/app/redux/features/cart/cartSlice';
 
 const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
-
+    const [isFetching, setIsFetching] = useState(false)
     const store = useAppSelector((state) => state.configurator)
+    const cart = useAppSelector((state) => state.cart)
     const dispatch = useAppDispatch()
     useEffect(() => {
         if (!store.initialized) {
@@ -20,6 +23,22 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
             }))
         }
     }, [steps])
+
+    const handleAddToCart = async () => {
+        setIsFetching(true)
+        const res = await addConfiguratedToCart(
+            cart.cartId,
+            store.selected.shape.variants.find(item => (item.title.split(" / ")[0] === store.selected.material.label)&&(item.title.split(" / ")[1] === store.selected.size)).id,
+            store.selected.legsType.variant
+        )
+        if (res.data) {
+            dispatch(setCartQuantity(res.data.cartLinesAdd.cart.totalQuantity))
+            dispatch(setCartLines(res.data.cartLinesAdd.cart.lines.edges))
+            dispatch(setCartAmount(res.data.cartLinesAdd.cart.cost.totalAmount))
+            setIsFetching(false)
+            dispatch(openCart())
+        }
+    }
 
     if (store.initialized) {
         return (
@@ -118,6 +137,15 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                         </div>
                     </div>
                 </div>
+                <div className='w-full flex justify-center items-center'>
+                    <button
+                        disabled={!store.selected.shape || !store.selected.size || !store.selected.material || !store.selected.legsType || isFetching} 
+                        onClick={handleAddToCart}
+                        className='w-2/3 text-lg font-medium text-white bg-black py-2 md:transition-colors md:hover:bg-[#bd8448] disabled:bg-white disabled:md:hover:bg-white'>
+                        Add to cart
+                    </button>
+                </div>
+                
             </div>
         )
     } else {

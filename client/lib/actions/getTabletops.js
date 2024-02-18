@@ -43,34 +43,41 @@ export default async function getTabletops () {
     }`
 
     const legsQuerry = `{
-        collection(handle: "legs-parts") {
-            products (first: 100) {
-              edges {
-                node {
-                  title 
-                  images(first: 1) {
-                    edges {
-                      node {
-                        url
-                      }
-                    }
+      collection(handle: "legs-parts") {
+        products(first: 100) {
+          edges {
+            node {
+              title
+              images(first: 1) {
+                edges {
+                  node {
+                    url
                   }
-                  media (first: 10) {
-                    edges {
-                      node {
-                        ... on Model3d {
-                          sources {
-                            format
-                            url
-                          }
-                        }
+                }
+              }
+              media(first: 10) {
+                edges {
+                  node {
+                    ... on Model3d {
+                      sources {
+                        format
+                        url
                       }
                     }
                   }
                 }
               }
+              variants(first: 2) {
+                edges {
+                  node {
+                    id
+                  }
+                }
+              }
             }
           }
+        }
+      }
     }`
 
     const res = await shopifyData(tableQuery)
@@ -94,6 +101,7 @@ export default async function getTabletops () {
             imgSrc: item.node.images.edges[0].node.url,
             link: item.node.media.edges.find(edge => edge.node.sources)
                 .node.sources.find(item => item.format === "glb").url,
+            variant: item.node.variants.edges[0].node.id
         }))
     }
     const allVariants = tabletop.sizes.reduce((acc, { variants }) => acc.concat(variants), []);

@@ -16,6 +16,7 @@ export default function ConfiguratorPage() {
     useEffect(() => {
         const fetchData = async () => {
             const tabletops = await getTabletops()
+            console.log(tabletops);
             setSteps(tabletops)
         }
         fetchData()
@@ -33,7 +34,7 @@ export default function ConfiguratorPage() {
     }, [])
 
     return (
-        <main className='container mx-auto px-2 relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse'>
+        <main className={'container mx-auto relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse ' + `${!overflowY ? " pr-[5px] pl-2" : " px-2"}`}>
             <StoreProvider>
                 {steps && <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} />}
                 <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] max-md:w-full'>
