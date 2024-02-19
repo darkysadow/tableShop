@@ -24,7 +24,7 @@ const CartItem = ({
                 </div>
                 <div className='w-3/5 flex flex-col gap-y-2'>
                     <h4 className='text-lg'>{title}</h4>
-                    <p className='text-sm text-slate-400'>Material: {material}</p>
+                    {material !== "Default Title" && <p className='text-sm text-slate-400'>Material: {material}</p>}
                     <p className='text-lg text-black font-medium'>${price}</p>
                     {amount !== 0 ? <div className='quick-view-form-inputBox flex flex-row md:w-1/2 lg:w-2/3 justify-between items-center border-2 text-black max-md:w-full relative'>
                         <button disabled={isLoading?.status} onClick={() => changeAmount(variantId ,amount - 1)} className='py-2 px-4 text-xl md:transition md:hover:text-[#bd8448]'>-</button>

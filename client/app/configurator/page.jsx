@@ -16,7 +16,6 @@ export default function ConfiguratorPage() {
     useEffect(() => {
         const fetchData = async () => {
             const tabletops = await getTabletops()
-            console.log(tabletops);
             setSteps(tabletops)
         }
         fetchData()
