@@ -20,13 +20,19 @@ const CartSidebar = () => {
             let localCartData = JSON.parse(
                 window.localStorage.getItem('tableShop:shopify:cart')
             )
+            
             if (localCartData) {
                 const cartInfo = await getCartFromShopify(localCartData.id)
-                dispatch(setCartId(localCartData.id))
-                dispatch(setCartQuantity(cartInfo.data.cart.totalQuantity))
-                dispatch(setCartLines(cartInfo.data.cart.lines.edges))
-                dispatch(setCartAmount(cartInfo.data.cart.cost.totalAmount))
-                return
+                if (cartInfo.data.cart === null) {
+                    await createCartOnShopify()
+                } else {
+                    dispatch(setCartId(localCartData.id))
+                    dispatch(setCartQuantity(cartInfo.data.cart.totalQuantity))
+                    dispatch(setCartLines(cartInfo.data.cart.lines.edges))
+                    dispatch(setCartAmount(cartInfo.data.cart.cost.totalAmount))
+                    return
+                }
+                
             }
             localCartData = await createCartOnShopify()
             dispatch(setCartId(localCartData.id))
