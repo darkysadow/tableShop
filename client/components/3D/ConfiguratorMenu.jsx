@@ -2,14 +2,16 @@
 
 import { initializeConfiguratorState, setSelectedOption } from '@/app/redux/features/configurator/configuratorSlice';
 import { useAppDispatch, useAppSelector } from '@/app/redux/hooks';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ImagePreloader from '../Preloaders/ImagePreloader';
 import Image from 'next/image';
 import addConfiguratedToCart from '@/lib/actions/addConfiguratedToCart';
 import { openCart, setCartAmount, setCartLines, setCartQuantity } from '@/app/redux/features/cart/cartSlice';
 
-const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
+const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
     const [isFetching, setIsFetching] = useState(false)
+    const [shapeFlag, setShapeFlag] = useState(true)
+    const [legsFlag, setLegsFlag] = useState(true)
     const store = useAppSelector((state) => state.configurator)
     const cart = useAppSelector((state) => state.cart)
     const dispatch = useAppDispatch()
@@ -23,6 +25,18 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
             }))
         }
     }, [steps])
+
+    useEffect(() => {
+        if(store.selected.shape?.label) {
+            setShapeFlag(false)
+        }
+    }, [store.selected.shape])
+
+    useEffect(() => {
+        if(store.selected.legsType?.label) {
+            setLegsFlag(false)
+        }
+    }, [store.selected.legsType])
 
     const handleAddToCart = async () => {
         setIsFetching(true)
@@ -47,11 +61,13 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                 onMouseEnter={() => setOverflowY(false)} 
                 className='md:absolute max-md:w-full px-4 py-4 flex flex-col  rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
                 <h1 className='tracking-wide text-2xl'>Choose the:</h1>
-                <div className='w-full my-5 h-5/6 md:overflow-y-auto max-md:overflow-x-auto md:scrolable-block_gray max-md:scrolable-block-y_gray md:pr-[5px] flex md:flex-col md:gap-y-3 max-md:flex-row max-md:gap-x-3 max-md:h-[22vh]'>
-                    <div className='w-full flex flex-col gap-y-2 bg-white py-2 px-2 rounded-t-lg'>
+                <div 
+                    className='w-full my-5 h-5/6 md:overflow-y-auto max-md:overflow-x-auto md:scrolable-block_gray max-md:scrolable-block-y_gray md:pr-[5px] flex md:flex-col md:gap-y-3 max-md:flex-row max-md:gap-x-3 max-md:h-[27vh]'>
+                    <div className='min-w-full relative flex flex-col gap-y-2 gap-x-[10%] bg-white py-2 px-2 md:rounded-t-lg max-md:h-5/6'>
+                        {shapeFlag && <span className='text-[#bd8448] z-50 absolute text-xs top-[2px] right-1 animate-pulse'>Select variant</span>}
                         <h2>Shape of the table top</h2>
-                        <div className='md:w-full max-md:w-[80vw] flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
-
+                        <div className={'md:w-full max-md:w-full flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'}>
+                
                             {store.tabletopShapes.map((shape, index) => (
                                 <div
                                     key={index}
@@ -74,9 +90,9 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
 
                         </div>
                     </div>
-                    <div className='w-full flex flex-col gap-y-2 bg-white py-2 px-2 rounded-t-lg'>
+                    <div className='min-w-full flex flex-col gap-y-2 gap-x-[10%] bg-white py-2 px-2 max-md:h-5/6'>
                         <h2>Size of the table top</h2>
-                        <div className='md:w-full max-md:w-[80vw] flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
+                        <div className='md:w-full max-md:w-full flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
                             {store.tabletopSizes.map((size, index) => (
                                 <div
                                     key={index}
@@ -88,9 +104,9 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                             ))}
                         </div>
                     </div>
-                    <div className='w-full flex flex-col gap-y-2 bg-white py-2 px-2'>
+                    <div className='min-w-full flex flex-col gap-y-2 gap-x-[10%] bg-white py-2 px-2 max-md:h-5/6'>
                         <h2>Material of the table top</h2>
-                        <div className='md:w-full max-md:w-[80vw] flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
+                        <div className='md:w-full max-md:w-full flex flex-row max-md:items-center max-md:justify-start h-full max-md:overflow-x-auto md:flex-wrap gap-x-[3%] gap-y-2'>
                             {store.tabletopMaterials.map((material, index) => (
                                 <div
                                     key={index}
@@ -112,8 +128,9 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                             ))}
                         </div>
                     </div>
-                    <div className='w-full flex flex-col items-center gap-y-2 bg-white py-2 px-2 rounded-b-lg'>
-                        <h2>Type of legs</h2>
+                    <div className='min-w-full relative flex flex-col items-center gap-y-2 bg-white py-2 px-2 md:rounded-b-lg  max-md:h-5/6'>
+                        {legsFlag && <span className='text-[#bd8448] z-50 absolute text-xs top-[2px] right-1 animate-pulse'>Select variant</span>}
+                        <h2 className='text-left w-full'>Type of legs</h2>
                         <div className='md:w-full max-md:w-[80vw] max-md:overflow-x-auto flex flex-row  max-md:items-center max-md:justify-start h-full md:flex-wrap gap-x-[3%] gap-y-2'>
                             {store.legsTypes.map((leg, index) => (
                                 <div
@@ -137,11 +154,12 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {} }) => {
                         </div>
                     </div>
                 </div>
-                <div className='w-full flex justify-center items-center'>
+                <div className='w-full flex flex-col justify-center gap-y-2 items-center my-auto'>
+                    {(!store.selected.shape || !store.selected.size || !store.selected.material || !store.selected.legsType) && <p className='text-[#bd8448] text-center w-4/5 text-xs'>Select shape, size, material and type of legs</p>}
                     <button
                         disabled={!store.selected.shape || !store.selected.size || !store.selected.material || !store.selected.legsType || isFetching} 
                         onClick={handleAddToCart}
-                        className='w-2/3 text-lg font-medium text-white bg-black py-2 md:transition-colors md:hover:bg-[#bd8448] disabled:bg-white disabled:md:hover:bg-white'>
+                        className='w-2/3 text-lg font-medium text-white bg-black py-2 md:transition-colors md:hover:bg-[#bd8448] disabled:bg-slate-200 disabled:md:hover:bg-white'>
                         Add to cart
                     </button>
                 </div>
