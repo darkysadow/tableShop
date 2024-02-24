@@ -1,16 +1,24 @@
 "use client"
 
 import Image from 'next/image'
-import React from 'react'
+import React, { useState } from 'react'
+import ImagePreloader from '../Preloaders/ImagePreloader'
 
 const CartItem = ({
     title, previewImageUrl,
     material, price, amount, variantId,
     isLoading, changeAmount, deleteFromCart
 }) => {
+    const [isFetching, setIsFetching] = useState(false)
+    const handleClickDelete = () => {
+        setIsFetching(true)
+        deleteFromCart(variantId)
+    }
     return (
-        <div className='w-full py-5 px-5 my-5 flex flex-row justify-between items-start'>
-
+        <div className='w-full relative py-5 px-5 my-5 flex flex-row justify-between items-start'>
+            {(isLoading || isFetching) && <div className='absolute z-40 backdrop-blur-sm w-11/12 h-full flex justify-center items-center'>
+                <ImagePreloader ml={false} />
+            </div>}
             <div className='flex flex-row justify-start items-center'>
                 <div className='w-1/4 relative'>
                     <Image
@@ -36,7 +44,7 @@ const CartItem = ({
             </div>
             <div
                         className='mr-3 cursor-pointer text-xl transition-colors md:hover:text-[#bd8448]'
-                        onClick={() => deleteFromCart(variantId)} 
+                        onClick={() => handleClickDelete()} 
                     >✖</div>
 
         </div>
