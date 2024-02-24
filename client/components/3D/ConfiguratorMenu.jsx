@@ -60,6 +60,11 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
                 onPointerDown={() => setOverflowY(false)}
                 onMouseEnter={() => setOverflowY(false)} 
                 className='md:absolute max-md:w-full px-4 py-4 flex flex-col  rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
+                <div className='absolute right-5 animate-pulse rounded-md px-2 text-xs py-2 bg-[#00000063] text-white '>
+                        <span className='_icon-arrow-left'></span>
+                        <span className='_icon-pointer'></span>
+                        <span className='_icon-arrow-right'></span>
+                </div>
                 <h1 className='tracking-wide text-2xl'>Choose the:</h1>
                 <div 
                     className='w-full my-5 h-5/6 md:overflow-y-auto max-md:overflow-x-auto md:scrolable-block_gray max-md:scrolable-block-y_gray md:pr-[5px] flex md:flex-col md:gap-y-3 max-md:flex-row max-md:gap-x-3 max-md:h-[27vh]'>
@@ -72,7 +77,10 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
                                 <div
                                     key={index}
                                     onClick={() => dispatch(setSelectedOption({ option: 'shape', value: shape }))}
-                                    className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${shape.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.shape?.label === shape.label ? ' border-[#bd8448]' : ' border-transparent'}`}
+                                    className={'w-[30%] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer relative' 
+                                    + `${shape.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` 
+                                    + `${store.selected?.shape?.label === shape.label ? ' border-[#bd8448]' : ' border-transparent'}`
+                                    + `${!store.selected.shape ? " before:absolute before:animate-pulse before:w-full before:h-full before:border before:border-[#5e5e5e] before:top-0 before:rounded-lg " : ""}`}
                                 >
                                     {shape.imgSrc && <div className='relative max-md:w-[45px] max-md:h-[45px] md:h-[6vw] md:w-[3.5vw] rounded-lg'>
                                         <Image
@@ -136,7 +144,10 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
                                 <div
                                     key={index}
                                     onClick={() => dispatch(setSelectedOption({ option: 'legsType', value: leg }))}
-                                    className={'md:w-[30%] max-md:min-w-[5.3125rem] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' + `${leg.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` + `${store.selected?.legsType === leg ? ' border-[#bd8448]' : ' border-transparent'}`}
+                                    className={'md:w-[30%] relative max-md:min-w-[5.3125rem] flex py-1 px-1 flex-col bg-[#00000007] rounded-lg border transition-all hover:bg-[#00000010] cursor-pointer' 
+                                    + `${leg.imgSrc ? " h-20 justify-between items-center" : " h-10 justify-center items-center"}` 
+                                    + `${store.selected?.legsType === leg ? ' border-[#bd8448]' : ' border-transparent'}` 
+                                    + `${!store.selected.shape ? " before:absolute before:animate-pulse before:w-full before:h-full before:border before:border-[#5e5e5e] before:top-0 before:rounded-lg " : ""}`}
                                 >
                                     {leg.imgSrc && <div className='relative max-md:w-[45px] max-md:h-[45px] md:h-[6vw] md:w-[3.5vw] rounded-lg'>
                                         <Image
