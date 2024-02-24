@@ -22,7 +22,7 @@ export default function ConfiguratorPage() {
     }, [])
 
     useEffect(() => {
-        overflowY
+        overflowY && windowWidth < 768
             ? (document.body.style.overflowY = 'hidden')
             : (document.body.style.overflowY = 'scroll');
     }, [overflowY]);
