@@ -7,6 +7,8 @@ import { Canvas } from '@react-three/fiber'
 import { PresentationControls, Stage } from '@react-three/drei'
 import { ConfiguratorWrapper } from '@/components/3D/ConfiguratorWrapper'
 import getTabletops from '@/lib/actions/getTabletops'
+import ConfiguratorCanvas from '@/components/3D/ConfiguratorCanvas'
+import ImagePreloader from '@/components/Preloaders/ImagePreloader'
 
 export default function ConfiguratorPage() {
     const [overflowY, setOverflowY] = useState(false)
@@ -35,23 +37,30 @@ export default function ConfiguratorPage() {
     return (
         <main className={'container mx-auto relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse ' + `${!overflowY ? " pr-[5px] pl-2" : " px-2"}`}>
             <StoreProvider>
-                {steps && <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} />}
-                <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] max-md:w-full'>
-                    <Canvas dpr={[1, 2]} onPointerDown={() => setOverflowY(true)} onPointerUp={() => setOverflowY(false)} /* onPointerOut={() => setOverflowY(false)} */>
-                        <color attach='background' args={["#ffffff"]} />
-                        <PresentationControls
-                            speed={1 + (11 * (2560 - windowWidth)) / (2560 - 320)}
-                            global
-                            polar={[-0.3, Math.PI / 6]}
-                            rotation={[Math.PI / 8, Math.PI / 4, 0]}
-                            zoom={1}
-                        >
-                            <Stage environment="city" shadows={false} intensity={3}>
-                                {steps && <ConfiguratorWrapper items={steps} />}
-                            </Stage>
-                        </PresentationControls>
-                    </Canvas>
-                </div>
+                {steps ? 
+                    <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} /> 
+                :
+                    <div className='md:absolute max-md:w-full px-4 py-4 flex flex-col justify-center items-center rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
+                        <div className='flex flex-col justify-center items-center'>
+                            <ImagePreloader ml={false} />
+                            <p>Loading table components</p>
+                        </div>
+                    </div>
+                }
+                {steps ? 
+                    <ConfiguratorCanvas 
+                        setOverflowY={setOverflowY}
+                        steps={steps}
+                        windowWidth={windowWidth}
+                    /> 
+                : 
+                    <div className='md:h-[calc(100vh-86px)] md:w-2/3 max-md:h-[calc(46vh-43px)] flex justify-center items-center max-md:w-full'>
+                        <div className='flex justify-center items-center flex-col'>
+                            <ImagePreloader ml={false} />
+                            <p>Loading table parts...</p>
+                        </div>
+                    </div>
+                }
             </StoreProvider>
         </main>
     )
