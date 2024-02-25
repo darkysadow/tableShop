@@ -53,6 +53,7 @@ const CartSidebar = () => {
             dispatch(setCartLines(deleteResult.lines.edges))
             dispatch(setCartQuantity(deleteResult.totalQuantity))
             dispatch(setCartAmount(deleteResult.cost.totalAmount))
+            return deleteResult
         }
     }
 

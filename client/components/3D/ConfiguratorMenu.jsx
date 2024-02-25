@@ -8,7 +8,7 @@ import Image from 'next/image';
 import addConfiguratedToCart from '@/lib/actions/addConfiguratedToCart';
 import { openCart, setCartAmount, setCartLines, setCartQuantity } from '@/app/redux/features/cart/cartSlice';
 
-const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
+const ConfiguratorMenu = ({ steps, setOverflowY = () => {}, windowWidth}) => {
     const [isFetching, setIsFetching] = useState(false)
     const [shapeFlag, setShapeFlag] = useState(true)
     const [legsFlag, setLegsFlag] = useState(true)
@@ -60,11 +60,11 @@ const ConfiguratorMenu = ({ steps, setOverflowY = () => {}}) => {
                 onPointerDown={() => setOverflowY(false)}
                 onMouseEnter={() => setOverflowY(false)} 
                 className='md:absolute max-md:w-full px-4 py-4 flex flex-col  rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
-                <div className='absolute right-5 animate-pulse rounded-md px-2 text-xs py-2 bg-[#00000063] text-white '>
+                {windowWidth < 768 && <div className='absolute right-5 animate-pulse rounded-md px-2 text-xs py-2 bg-[#00000063] text-white '>
                         <span className='_icon-arrow-left'></span>
                         <span className='_icon-pointer'></span>
                         <span className='_icon-arrow-right'></span>
-                </div>
+                </div>}
                 <h1 className='tracking-wide text-2xl'>Choose the:</h1>
                 <div 
                     className='w-full my-5 h-5/6 md:overflow-y-auto max-md:overflow-x-auto md:scrolable-block_gray max-md:scrolable-block-y_gray md:pr-[5px] flex md:flex-col md:gap-y-3 max-md:flex-row max-md:gap-x-3 max-md:h-[27vh]'>

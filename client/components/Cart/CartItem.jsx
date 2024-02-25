@@ -10,9 +10,12 @@ const CartItem = ({
     isLoading, changeAmount, deleteFromCart
 }) => {
     const [isFetching, setIsFetching] = useState(false)
-    const handleClickDelete = () => {
+    const handleClickDelete = async () => {
         setIsFetching(true)
-        deleteFromCart(variantId)
+        const res = await deleteFromCart(variantId)
+        if (res) {
+            setIsFetching(false)
+        }
     }
     return (
         <div className='w-full relative py-5 px-5 my-5 flex flex-row justify-between items-start'>

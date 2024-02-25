@@ -38,7 +38,11 @@ export default function ConfiguratorPage() {
         <main className={'container mx-auto relative min-h-[calc(100vh-86px)] pb-5 max-md:flex max-md:flex-col-reverse ' + `${!overflowY ? " pr-[5px] pl-2" : " px-2"}`}>
             <StoreProvider>
                 {steps ? 
-                    <ConfiguratorMenu steps={steps} setOverflowY={setOverflowY} /> 
+                    <ConfiguratorMenu 
+                        steps={steps} 
+                        setOverflowY={setOverflowY} 
+                        windowWidth={windowWidth} 
+                    /> 
                 :
                     <div className='md:absolute max-md:w-full px-4 py-4 flex flex-col justify-center items-center rounded-sm right-0 md:w-1/3 bg-[#00000005] md:h-[calc(100vh-106px)] max-md:h-[calc(54vh-43px)]'>
                         <div className='flex flex-col justify-center items-center'>
